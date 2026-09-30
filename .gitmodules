@@ -1,0 +1,6 @@
+[submodule "external/OpenOPC"]
+	path = external/OpenOPC
+	url = git@github.com:wanglinsong/OpenOPC.git
+[submodule "external/agency-agents"]
+	path = external/agency-agents
+	url = git@github.com:wanglinsong/agency-agents.git
