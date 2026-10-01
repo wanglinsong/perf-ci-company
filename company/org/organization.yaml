@@ -10,67 +10,52 @@ founder:
 roles:
 
   - id: ceo-cto
-    title: CEO / CTO
+    name: CEO / CTO
+    responsibility: >
+      Turn the company mission into a working product and sustainable business.
+      Own company strategy, technical strategy, organization, prioritization,
+      architecture decisions, integration, release decisions, and escalation.
     reports_to: human-founder
-    responsibilities:
-      - company_strategy
-      - technical_strategy
-      - organization
-      - prioritization
-      - integration
-      - escalation
 
   - id: product-lead
-    title: Product Lead
+    name: Product Lead
+    responsibility: >
+      Identify valuable data-infrastructure performance problems and translate
+      them into products customers will pay for. Own customer discovery,
+      product requirements, roadmap, pricing hypotheses, competitive analysis,
+      and positioning.
     reports_to: ceo-cto
-    responsibilities:
-      - customer_discovery
-      - product_strategy
-      - requirements
-      - roadmap
-      - competitive_analysis
 
   - id: performance-lead
-    title: Principal Performance Engineer
+    name: Principal Performance Engineer
+    responsibility: >
+      Determine whether distributed data system changes improve or degrade
+      real workloads and explain why. Own benchmark methodology, workload
+      selection, experiment design, regression analysis, statistical analysis,
+      and performance modeling.
     reports_to: ceo-cto
-    responsibilities:
-      - benchmark_methodology
-      - workload_design
-      - experimental_design
-      - regression_analysis
-      - statistical_analysis
-      - performance_modeling
 
   - id: engine-lead
-    title: Distributed Data Engine Lead
+    name: Distributed Data Engine Lead
+    responsibility: >
+      Provide deep expertise in Spark, Gluten, Trino, and Presto, including
+      query execution, query plans, configuration, native/JVM boundaries,
+      and engine internals. Support investigation of engine behavior.
     reports_to: performance-lead
-    responsibilities:
-      - spark
-      - gluten
-      - trino
-      - presto
-      - query_execution
-      - engine_internals
 
   - id: platform-lead
-    title: Platform Engineering Lead
+    name: Platform Engineering Lead
+    responsibility: >
+      Build reliable infrastructure for provisioning, executing, collecting,
+      and storing performance experiments across AWS, Kubernetes, EC2,
+      Docker, Pulumi, GitHub Actions, and CI/CD systems.
     reports_to: ceo-cto
-    responsibilities:
-      - platform
-      - orchestration
-      - cloud
-      - kubernetes
-      - ci_cd
-      - experiment_execution
-      - observability
 
   - id: qa-lead
-    title: Performance QA Lead
+    name: Performance QA Lead
+    responsibility: >
+      Prevent incorrect performance claims through independent validation.
+      Validate methodology, reproducibility, environment and data equivalence,
+      instability, statistical significance, and AI-generated conclusions.
     reports_to: ceo-cto
-    responsibilities:
-      - validation
-      - reproducibility
-      - regression_gates
-      - experiment_integrity
-      - adversarial_review
 

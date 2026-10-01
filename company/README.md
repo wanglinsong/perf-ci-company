@@ -21,11 +21,21 @@ Current focus:
 Organization:
 
 CEO / CTO
-├── Product Lead
-├── Platform Lead
-├── Performance Lead
-│   └── Engine Lead
-└── QA Lead
+    │
+    ├── Product Lead
+    │      └── "Who cares enough to pay?"
+    │
+    ├── Performance Lead
+    │      └── "What actually happened?"
+    │
+    │      └── Engine Lead
+    │             └── "Why did the engine behave this way?"
+    │
+    ├── Platform Lead
+    │      └── "Can we reproduce the experiment?"
+    │
+    └── QA Lead
+           └── "Can we prove the conclusion?"
 
 Principles:
 
@@ -34,4 +44,26 @@ Principles:
 - Automate repetitive work
 - Human approves major decisions
 - Company knowledge is durable
+
+Operating Loop:
+
+Question
+   ↓
+Hypothesis
+   ↓
+Experiment
+   ↓
+Evidence
+   ↓
+Investigation
+   ↓
+Challenge
+   ↓
+Conclusion
+   ↓
+Decision
+   ↓
+Company Memory
+   ↓
+Next Question
 

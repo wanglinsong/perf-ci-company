@@ -1,20 +1,20 @@
 # Mission
 
-Build the world's best continuous performance
-engineering platform for distributed data systems.
+Build the world's best continuous performance engineering platform
+for distributed data systems.
 
-Help engineering teams answer:
+Help engineering teams answer four questions with measured evidence:
 
-- Is this faster?
-- Is this slower?
-- Is this cheaper?
-- Why?
+* Is this faster?
+* Is this slower?
+* Is this cheaper?
+* Why?
 
-Target systems:
+Start with Spark and Gluten, then expand to Trino, Presto,
+and other distributed data engines.
 
-- Spark
-- Gluten
-- Trino
-- Presto
-- Future engines
+Our goal is not simply to run benchmarks.
+
+Our goal is to turn performance experimentation into a
+continuous engineering discipline.
 
