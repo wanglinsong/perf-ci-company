@@ -11,12 +11,18 @@ roles:
 
   - id: ceo-cto
     name: CEO / CTO
+    role_type: coordinator
     responsibility: >
       Turn the company mission into a working product and sustainable business.
       Own company strategy, technical strategy, organization, prioritization,
       architecture decisions, cross-functional integration, release decisions,
       and escalation to the human founder.
     reports_to: human-founder
+    coordinates:
+      - product-lead
+      - performance-lead
+      - platform-lead
+      - qa-lead
     owns:
       - company strategy
       - technical strategy
