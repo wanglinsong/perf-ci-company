@@ -54,26 +54,42 @@ The Perf CI org is defined in two places (keep in sync):
 
 Each role has an `AGENT.md` under `company/employees/{role}/AGENT.md`. Copies live in `external/OpenOPC/.opc/prompts/perf-ci/{role}.md`. When updating an AGENT.md, copy it to the OpenOPC prompts directory too.
 
+### Staffing — use Default Employee
+
+When the staffing dialog appears before a company run, always pick **Default Employee** for each role. This uses the role's `prompt_refs` (the AGENT.md files) directly. Do NOT let OPC auto-recruit from the talent market — it will pick an unrelated template (e.g. "Anthropologist") that overrides the role's personality.
+
 ### Stale state cleanup
 
-If the Office view shows wrong agents, clean up:
+If the Office view shows wrong agents (e.g. "Anthropologist" on all roles):
 
 ```bash
-# Remove hired employee files
+# 1. Remove hired employee files
 rm external/OpenOPC/.opc/company_state/perf_ci/employees/*.yaml
 
-# Clear UI cache
+# 2. Purge stale run sessions from tasks.db (replace RUN_IDs with actual stale run IDs)
+python3 -c "
+import sqlite3
+STALE_RUNS = ['run-id-1', 'run-id-2']  # get from delegation_role_sessions
+p = ','.join('?'*len(STALE_RUNS))
+conn = sqlite3.connect('external/OpenOPC/.opc/projects/perf-ci/tasks.db')
+cur = conn.cursor()
+for t in ['delegation_role_sessions','delegation_runs','delegation_cells',
+          'delegation_work_items','delegation_events','team_instances','seat_states']:
+    try: cur.execute(f'DELETE FROM {t} WHERE run_id IN ({p})', STALE_RUNS)
+    except: pass
+conn.commit(); conn.close()
+"
+
+# 3. Clear UI cache
 python3 -c "
 import sqlite3
 conn = sqlite3.connect('external/OpenOPC/.opc/ui_state.db')
 cur = conn.cursor()
-cur.execute('DELETE FROM agents')
-cur.execute('DELETE FROM agent_appearances')
-cur.execute('DELETE FROM custom_agents_shadow')
-conn.commit()
-conn.close()
+for t in ['agents','agent_appearances','custom_agents_shadow']:
+    cur.execute(f'DELETE FROM {t}')
+conn.commit(); conn.close()
 "
 
-# Reset staffing defaults
-echo '{"scopes":{},"updated_at":"","version":1}' > external/OpenOPC/.opc/projects/perf-ci/company_staffing_defaults.json
+# 4. Reset staffing defaults
+echo '{\"scopes\":{},\"updated_at\":\"\",\"version\":1}' > external/OpenOPC/.opc/projects/perf-ci/company_staffing_defaults.json
 ```
