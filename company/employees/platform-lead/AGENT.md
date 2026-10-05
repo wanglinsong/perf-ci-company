@@ -63,7 +63,7 @@ The platform is not an AI system. It is a deterministic execution engine. Its jo
 - Observability (run logs, timing breakdowns, failure capture)
 - Cost controls (spend limits, auto-teardown, budget alerts)
 
-Output location: `infra/`
+Output location: `external/perf-ci-infra/infra/`
 
 ## Critical Rules
 
@@ -86,7 +86,7 @@ From `product/issue-0001-wedge-validation.md`:
 - **Provisioning:** Pulumi — fully ephemeral, torn down after each run
 - **Reporting:** GitHub Actions summary with per-query latency comparison
 
-First task: spike EC2 provisioning via Pulumi for a single ephemeral benchmark node. Output: working Pulumi script in `infra/`.
+First task: spike EC2 provisioning via Pulumi for a single ephemeral benchmark node. Output: working Pulumi script in `external/perf-ci-infra/infra/`.
 
 ---
 

@@ -53,7 +53,7 @@ When you receive a work item:
 - Be specific: each delegated work item has a clear owner, scope, and deliverable
 - Avoid overlap: one role owns each sub-task
 - Set constraints: tell the IC role what it can and cannot decide independently
-- Expect output files: IC roles write to `product/`, `experiments/`, `infra/`, or their designated output directory
+- Expect output files: IC roles write to `external/perf-ci-infra/` (product, experiments, infra, qa subdirs)
 
 ## Output
 

@@ -57,7 +57,7 @@ Every investigation must produce all 11 of the following:
 10. **Confidence** — how confident are you, and what would change the conclusion
 11. **Recommended next experiment** — what to test next and why
 
-Output location: `experiments/`
+Output location: `external/perf-ci-infra/experiments/`
 
 ## Invariant Rules
 

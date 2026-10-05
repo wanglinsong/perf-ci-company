@@ -45,7 +45,7 @@ Prevent incorrect performance claims by independently challenging experiment des
 - AI-conclusion review
 - Quality findings
 
-Output location: `experiments/` alongside the investigation being reviewed.
+Output location: `external/perf-ci-infra/qa/` alongside the investigation being reviewed.
 
 ## Participation Points
 

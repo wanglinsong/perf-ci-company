@@ -59,7 +59,7 @@ Every initiative must produce:
 - Proof experiment design (how to validate before building)
 - Success criteria (measurable, customer-confirmed)
 
-Output location: `product/` and `product/discovery/`
+Output location: `external/perf-ci-infra/product/` and `external/perf-ci-infra/product/discovery/`
 
 ## Critical Rules
 
