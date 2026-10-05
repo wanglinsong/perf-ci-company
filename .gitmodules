@@ -4,3 +4,6 @@
 [submodule "external/agency-agents"]
 	path = external/agency-agents
 	url = git@github.com:wanglinsong/agency-agents.git
+[submodule "external/perf-ci-infra"]
+	path = external/perf-ci-infra
+	url = git@github.com:wanglinsong/perf-ci-infra.git
