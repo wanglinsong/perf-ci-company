@@ -80,6 +80,12 @@ for t in ['delegation_role_sessions','delegation_runs','delegation_cells',
 conn.commit(); conn.close()
 "
 
+# Also delete orphaned work_item_runtime_links AND their tasks (causes startup crash if missed)
+sqlite3 external/OpenOPC/.opc/projects/perf-ci/tasks.db \
+  "DELETE FROM work_item_runtime_links WHERE work_item_id NOT IN (SELECT work_item_id FROM delegation_work_items);"
+sqlite3 external/OpenOPC/.opc/projects/perf-ci/tasks.db \
+  "DELETE FROM tasks WHERE metadata LIKE '%work_item_runtime%' AND metadata LIKE '%work_item_projection_id%' AND id NOT IN (SELECT runtime_task_id FROM work_item_runtime_links);"
+
 # 3. Clear UI cache
 python3 -c "
 import sqlite3
