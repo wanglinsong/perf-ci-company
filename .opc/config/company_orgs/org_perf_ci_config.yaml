@@ -14,17 +14,17 @@ company:
 roles:
 - id: ceo-cto
   name: CEO / CTO
-  responsibility: 'Turn the company mission into a working product and sustainable business.
-    Own company strategy, technical strategy, organization, prioritization, architecture decisions,
-    work assignment and routing between roles, arbitration of QA disputes, release recommendations,
-    and escalation to the human founder.
+  responsibility: 'Turn the company mission into a working product and sustainable
+    business. Own company strategy, technical strategy, organization, prioritization,
+    architecture decisions, work assignment and routing between roles, arbitration
+    of QA disputes, release recommendations, and escalation to the human founder.
 
     '
   reports_to: human-founder
   icon: null
   can_spawn: []
   tools: []
-  preferred_external_agent: claude_code
+  preferred_external_agent: opencode
   prompt_refs:
   - ../company/employees/ceo-cto/ROLE.md
   - ../company/employees/ceo-cto/AGENT.md
@@ -53,17 +53,17 @@ roles:
   coordinator_policy: null
 - id: product-lead
   name: Product Lead
-  responsibility: 'Identify valuable data-infrastructure performance problems and translate
-    them into products customers will pay for. Own customer problems, requirements, roadmap,
-    pricing hypotheses, competitive analysis, positioning, and MVP scope. Prepare customer
-    discovery; the human founder conducts interviews.
+  responsibility: 'Identify valuable data-infrastructure performance problems and
+    translate them into products customers will pay for. Own customer problems, requirements,
+    roadmap, pricing hypotheses, competitive analysis, positioning, and MVP scope.
+    Prepare customer discovery; the human founder conducts interviews.
 
     '
   reports_to: ceo-cto
   icon: null
   can_spawn: []
   tools: []
-  preferred_external_agent: claude_code
+  preferred_external_agent: opencode
   prompt_refs:
   - ../company/employees/product-lead/ROLE.md
   - ../company/employees/product-lead/AGENT.md
@@ -88,18 +88,19 @@ roles:
   coordinator_policy: null
 - id: performance-lead
   name: Principal Performance Engineer
-  responsibility: 'Determine whether distributed data system changes improve or degrade real
-    workloads, quantify the effect, and explain why through evidence. Own benchmark methodology
-    and thresholds, workload selection, experiment specifications, statistical analysis, engine-level
-    investigation, and the content of performance conclusions. Specify the algorithms that
-    product components implement. Platform executes runs; QA approves designs and claims.
+  responsibility: 'Determine whether distributed data system changes improve or degrade
+    real workloads, quantify the effect, and explain why through evidence. Own benchmark
+    methodology and thresholds, workload selection, experiment specifications, statistical
+    analysis, engine-level investigation, and the content of performance conclusions.
+    Specify the algorithms that product components implement. Platform executes runs;
+    QA approves designs and claims.
 
     '
   reports_to: ceo-cto
   icon: null
   can_spawn: []
   tools: []
-  preferred_external_agent: claude_code
+  preferred_external_agent: opencode
   prompt_refs:
   - ../company/employees/performance-lead/ROLE.md
   - ../company/employees/performance-lead/AGENT.md
@@ -107,8 +108,8 @@ roles:
   skill_refs: []
   handoff_template_ref: company/org/handoff-contracts.md
   memory_policy_ref: null
-  artifact_contract_ref: H3 Experiment Spec, H5 Run Request, H7 Investigation Report, H10
-    Algorithm Spec (company/org/handoff-contracts.md)
+  artifact_contract_ref: H3 Experiment Spec, H5 Run Request, H7 Investigation Report,
+    H10 Algorithm Spec (company/org/handoff-contracts.md)
   runtime_policy:
     execution_strategy: auto
     allowed_downstream_roles: []
@@ -125,18 +126,18 @@ roles:
   coordinator_policy: null
 - id: platform-lead
   name: Platform Engineering Lead
-  responsibility: 'Build reliable infrastructure that provisions, executes, observes, and
-    stores performance experiments deterministically. Execute approved experiment specifications
-    exactly, and build the product components (CI check, regression analyzer, reports) to
-    the Performance Lead''s algorithm specifications. Operate within a founder-approved cloud
-    spend envelope.
+  responsibility: 'Build reliable infrastructure that provisions, executes, observes,
+    and stores performance experiments deterministically. Execute approved experiment
+    specifications exactly, and build the product components (CI check, regression
+    analyzer, reports) to the Performance Lead''s algorithm specifications. Operate
+    within a founder-approved cloud spend envelope.
 
     '
   reports_to: ceo-cto
   icon: null
   can_spawn: []
   tools: []
-  preferred_external_agent: claude_code
+  preferred_external_agent: opencode
   prompt_refs:
   - ../company/employees/platform-lead/ROLE.md
   - ../company/employees/platform-lead/AGENT.md
@@ -161,18 +162,18 @@ roles:
   coordinator_policy: null
 - id: qa-lead
   name: Performance QA Lead
-  responsibility: 'Prevent incorrect performance claims. Review every experiment design before
-    execution, validate run integrity, independently recompute and reproduce results, and
-    issue the verdict that a performance claim may be published. QA is the reviewer for Performance
-    and Platform work and holds a veto on publishing claims and on gating with unvalidated
-    components; the CEO/CTO arbitrates disputes.
+  responsibility: 'Prevent incorrect performance claims. Review every experiment design
+    before execution, validate run integrity, independently recompute and reproduce
+    results, and issue the verdict that a performance claim may be published. QA is
+    the reviewer for Performance and Platform work and holds a veto on publishing
+    claims and on gating with unvalidated components; the CEO/CTO arbitrates disputes.
 
     '
   reports_to: ceo-cto
   icon: null
   can_spawn: []
   tools: []
-  preferred_external_agent: claude_code
+  preferred_external_agent: opencode
   prompt_refs:
   - ../company/employees/qa-lead/ROLE.md
   - ../company/employees/qa-lead/AGENT.md

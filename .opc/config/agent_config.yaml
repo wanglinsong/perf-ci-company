@@ -128,7 +128,7 @@ external_agents:
     gateway_url: ''
     idle_timeout_seconds: 900
     interactive_timeout_seconds: 900
-    model: ''
+    model: ollama/qwen3.6:latest
     model_flag: --model
     new_session_flag: ''
     project_dir: ''
@@ -144,10 +144,10 @@ external_agents:
     trusted_dirs: []
     workspace_base: ''
   preferred_order:
+  - opencode
   - claude_code
   - cursor
   - codex
-  - opencode
   - jiuwen
   - jiuwenswarm
 native_subagents:

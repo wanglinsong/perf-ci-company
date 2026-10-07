@@ -44,9 +44,34 @@ bin/opc ui --project perf-ci
 
 Running `uv run opc` directly inside `external/OpenOPC` uses OpenOPC's own `.opc` and will not see Perf CI.
 
+### Execution agent — opencode
+
+OpenOPC and all agent tool use (file edits, shell) run on this Mac, in this repo. Only model inference runs on host `opencode` (192.168.68.58), which serves Ollama at `http://ollama:11434` (`/etc/hosts`: `192.168.68.58 opencode` and `192.168.68.58 ollama`).
+
+- All roles run on `opencode` (`preferred_external_agent` in the org config; first in `preferred_order` in `agent_config.yaml`), using the local opencode CLI with model `ollama/qwen3.6:latest`.
+- The `ollama` provider lives in your user opencode config (`~/.config/opencode/opencode.json`, `baseURL: http://ollama:11434/v1`).
+- On host `opencode`, Ollama must listen on the network: start it with `OLLAMA_HOST=0.0.0.0:11434`. Ollama has no auth — anyone on the LAN can use it.
+- The OpenCode desktop app's server on `opencode:4096` is not used by OpenOPC.
+
 ### LLM config
 
-`.opc/config/llm_config.yaml` is gitignored. Set it up manually:
+`.opc/config/llm_config.yaml` is gitignored (per machine). OpenOPC's own LLM drives intake, coordination, gates, and auto-recruit — if it fails, runs fail at CEO intake. Point it at Ollama (`http://ollama:11434`):
+
+```yaml
+llm:
+  default_model: ollama_chat/qwen3.6:latest
+  api_base: http://ollama:11434
+  api_key: ''
+  api_key_env: ''
+  context_window: 32768
+  max_tokens: 8192
+  temperature: 0.3
+  routing: {}
+  fallback: {}
+  reasoning_effort: null
+```
+
+Or use Anthropic (requires API credit):
 
 ```yaml
 llm:
@@ -92,7 +117,7 @@ Put responsibilities in ROLE.md, working style in AGENT.md, and anything phase-s
 
 ### Staffing — use Default Employee
 
-When the staffing dialog appears before a company run, pick **Default Employee** for each role unless you deliberately hired a talent profile for that role (see above). Default Employee uses only the role's `prompt_refs` (ROLE.md, AGENT.md, current-focus.md). Do NOT let OPC auto-recruit from the talent market — keyword matching picks unrelated templates (e.g. "Anthropologist", or "Performance Benchmarker" for QA).
+When the staffing dialog appears before a company run, pick **Default Employee** for each role unless you deliberately hired a talent profile for that role (see above). Default Employee uses only the role's `prompt_refs` (ROLE.md, AGENT.md, current-focus.md). Do NOT click **Auto recruit** (the UI recommends it whenever templates exist): it depends on OpenOPC's LLM, and when that fails it assigns the alphabetically first template ("Anthropologist") to every role. Do NOT let OPC auto-recruit from the talent market — keyword matching picks unrelated templates (e.g. "Anthropologist", or "Performance Benchmarker" for QA).
 
 ### Stale state cleanup
 
