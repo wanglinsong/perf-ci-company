@@ -55,14 +55,14 @@ OpenOPC and all agent tool use (file edits, shell) run on this Mac, in this repo
 
 ### LLM config
 
-`.opc/config/llm_config.yaml` (tracked; never put a key in `api_key`). OpenOPC's own LLM drives intake, coordination, gates, and auto-recruit — if it fails, runs fail at CEO intake. Point it at Ollama (`http://ollama:11434`):
+`.opc/config/llm_config.yaml` (tracked; never put a key in `api_key`). OpenOPC's own LLM drives intake, coordination, gates, and auto-recruit — if it fails, runs fail at CEO intake. Point it at Ollama's OpenAI-compatible API (`http://ollama:11434/v1`). Do not use the `ollama_chat/` LiteLLM route: when streaming, it merges parallel tool calls into one call with invalid arguments, and agents stall.
 
 ```yaml
 llm:
-  default_model: ollama_chat/qwen3.6:latest
-  api_base: http://ollama:11434
+  default_model: openai/qwen3.6:latest     # Ollama's OpenAI-compatible API
+  api_base: http://ollama:11434/v1
   api_key: ''
-  api_key_env: ''
+  api_key_env: OLLAMA_API_KEY             # bin/opc defaults it to "ollama"
   context_window: 32768
   max_tokens: 8192
   temperature: 0.3

@@ -13,5 +13,9 @@ if [ -f "$ROOT/.env" ]; then
   . "$ROOT/.env"
   set +a
 fi
+
+# OpenOPC's LLM reaches Ollama through its OpenAI-compatible API, whose client
+# requires a key; Ollama ignores it. Override in .env if your endpoint needs one.
+export OLLAMA_API_KEY="${OLLAMA_API_KEY:-ollama}"
 cd "$ROOT/external/OpenOPC"
 exec uv run opc "$@"

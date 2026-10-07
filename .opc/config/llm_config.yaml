@@ -1,8 +1,8 @@
 llm:
-  default_model: ollama_chat/qwen3.6:latest
-  api_base: http://ollama:11434
+  default_model: openai/qwen3.6:latest
+  api_base: http://ollama:11434/v1
   api_key: ''
-  api_key_env: ''
+  api_key_env: OLLAMA_API_KEY
   context_window: 32768
   context_window_overrides: {}
   max_tokens: 8192
