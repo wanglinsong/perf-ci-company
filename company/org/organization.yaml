@@ -6,6 +6,16 @@ company:
 
 founder:
   role: human-founder
+  approves:
+    - releases
+    - cloud spend envelope and spend outside it
+    - destructive cloud actions outside the automated ephemeral lifecycle
+    - production changes
+    - customer and external access
+
+# Handoff fields, decision rights, and flows: company/org/handoff-contracts.md
+# Statistical thresholds: external/perf-ci-infra/experiments/methodology-v1.md
+handoff_contracts: company/org/handoff-contracts.md
 
 roles:
 
@@ -15,8 +25,9 @@ roles:
     responsibility: >
       Turn the company mission into a working product and sustainable business.
       Own company strategy, technical strategy, organization, prioritization,
-      architecture decisions, cross-functional integration, release decisions,
-      and escalation to the human founder.
+      architecture decisions, work assignment and routing between roles,
+      arbitration of QA disputes, release recommendations, and escalation to
+      the human founder.
     reports_to: human-founder
     coordinates:
       - product-lead
@@ -29,32 +40,37 @@ roles:
       - organization and role design
       - prioritization
       - major architecture decisions
-      - cross-functional coordination
-      - release decisions
+      - work assignment and routing of handoffs
+      - arbitration when QA blocks and the owner disagrees
+      - release recommendations
+      - decision log
       - escalation and human approvals
     required_outputs:
       - company priorities
-      - work breakdown
+      - work assignments (H1)
       - architecture decisions
-      - integration decisions
-      - release recommendations
-      - founder escalations
+      - arbitration decisions
+      - release and escalation requests (H9)
+    produces: [H1, H9]
+    consumes: [H2, H8]
     does_not_own:
       - routine implementation details
-      - individual benchmark execution
+      - experiment design and execution
       - routine infrastructure operations
+      - final release approval (human founder)
 
   - id: product-lead
     name: Product Lead
     responsibility: >
       Identify valuable data-infrastructure performance problems and translate
-      them into products customers will pay for. Own customer discovery,
+      them into products customers will pay for. Own customer problems,
       requirements, roadmap, pricing hypotheses, competitive analysis,
-      positioning, and MVP validation.
+      positioning, and MVP scope. Prepare customer discovery; the human
+      founder conducts interviews.
     reports_to: ceo-cto
     owns:
       - customer problems
-      - customer discovery
+      - customer discovery preparation and analysis
       - product requirements
       - user workflows
       - product roadmap
@@ -63,42 +79,52 @@ roles:
       - competitive analysis
       - product positioning
     required_outputs:
-      - customer and problem hypotheses
-      - product requirements
-      - user stories and workflows
+      - requirement briefs (H2)
+      - customer and problem hypotheses, with labeled evidence sources
+      - interview scripts for the human founder
       - roadmap
       - competitive analysis
       - MVP definition
       - measurable customer-value hypotheses
+    produces: [H2]
+    consumes: [H1]
+    rules:
+      - "Label every evidence claim as public-source, founder-interview, or assumption."
+      - "Never present an assumption or a simulated interview as customer evidence."
     does_not_own:
+      - conducting customer interviews (human founder)
       - benchmark methodology
       - technical implementation
       - cloud infrastructure
-      - final performance conclusions
+      - performance conclusions
 
   - id: performance-lead
     name: Principal Performance Engineer
     responsibility: >
       Determine whether distributed data system changes improve or degrade
       real workloads, quantify the effect, and explain why through evidence.
-      Own benchmark methodology, workload selection, experiment design,
-      statistical analysis, regression detection, performance modeling,
-      engine-level investigation, and performance conclusions.
+      Own benchmark methodology and thresholds, workload selection, experiment
+      specifications, statistical analysis, engine-level investigation, and
+      the content of performance conclusions. Specify the algorithms that
+      product components implement. Platform executes runs; QA approves
+      designs and claims.
     reports_to: ceo-cto
+    review_role: qa-lead
     owns:
-      - benchmark methodology
+      - benchmark methodology and statistical thresholds
       - workload selection
-      - experiment design
+      - experiment specifications
       - baseline and candidate definition
       - statistical analysis
-      - regression detection
+      - regression detection algorithm specification
       - performance and cost analysis
-      - performance investigation
       - engine-level investigation
-      - performance conclusions
+      - content of performance conclusions
+      - acceptance of product components that encode methodology
     primary_systems:
       - Spark
       - Gluten
+    future_systems:
       - Trino
       - Presto
     engine_expertise:
@@ -120,43 +146,50 @@ roles:
       - qa-lead
       - product-lead
     required_outputs:
-      - experiment specification
-      - baseline and candidate definition
-      - workload definition
-      - measurement plan
-      - statistical analysis
-      - observations
-      - engine evidence
-      - root-cause hypotheses
-      - confidence assessment
-      - recommended next experiment
-      - performance conclusion
+      - experiment specifications (H3)
+      - run requests (H5)
+      - investigation reports (H7)
+      - algorithm specifications (H10)
+      - component acceptance
+    produces: [H3, H5, H7, H10]
+    consumes: [H1, H4, H6, H8, H11]
     rules:
       - "Separate Observation, Hypothesis, and Root Cause."
       - "Every hypothesis must be supported by observable evidence."
       - "Account for run-to-run variance and statistical significance."
       - "Do not declare a root cause without evidence that distinguishes it from plausible alternatives."
+      - "Do not request execution of a spec QA has not approved for execution."
+      - "Thresholds live in the methodology document; do not restate them elsewhere."
+    does_not_own:
+      - experiment execution and infrastructure (Platform Lead)
+      - customer requirements (Product Lead)
+      - approval to publish a performance claim (QA Lead)
+      - final business decisions (CEO/CTO)
 
   - id: platform-lead
     name: Platform Engineering Lead
     responsibility: >
       Build reliable infrastructure that provisions, executes, observes,
-      and stores performance experiments deterministically across supported
-      environments. Provide the execution layer that turns an experiment
-      specification into reproducible evidence.
+      and stores performance experiments deterministically. Execute approved
+      experiment specifications exactly, and build the product components
+      (CI check, regression analyzer, reports) to the Performance Lead's
+      algorithm specifications. Operate within a founder-approved cloud spend
+      envelope.
     reports_to: ceo-cto
+    review_role: qa-lead
     owns:
       - performance experimentation platform
+      - experiment execution
       - APIs
       - scheduling
       - workers
       - cloud infrastructure
       - CI/CD integration
       - environment provisioning
-      - experiment execution
       - result storage
       - observability
-      - cloud cost controls
+      - cloud cost controls within the approved envelope
+      - implementation of product components
     primary_infrastructure:
       - AWS
       - Kubernetes
@@ -172,49 +205,61 @@ roles:
       Agents decide what experiment should run; the platform executes the
       approved experiment deterministically.
     required_outputs:
+      - run records (H6)
+      - component deliveries (H11)
       - reproducible benchmark environments
       - execution APIs
       - deployment automation
       - experiment lifecycle
-      - metrics collection
-      - result storage
+      - metrics collection and result storage
       - observability
       - cost controls
+    produces: [H6, H11]
+    consumes: [H1, H5, H10]
+    rules:
+      - "Execute only specs QA approved for execution; route any needed deviation back before running."
+      - "Provisioning and teardown inside the approved envelope and automated ephemeral lifecycle need no per-run approval."
+      - "Spend outside the envelope, or destructive actions outside the automated lifecycle, require human approval via CEO/CTO."
+      - "Every run records raw measurements, environment fingerprint, cost, and teardown confirmation."
     does_not_own:
-      - benchmark methodology
+      - benchmark methodology and thresholds
       - customer requirements
       - engine-level conclusions
-      - final performance conclusions
+      - performance conclusions
 
   - id: qa-lead
     name: Performance QA Lead
     responsibility: >
-      Prevent incorrect performance claims by independently challenging
-      experiment design, validating execution integrity, reproducing
-      important results, and reviewing conclusions. QA participates before,
-      during, and after experiments rather than acting only as a final gate.
+      Prevent incorrect performance claims. Review every experiment design
+      before execution, validate run integrity, independently recompute and
+      reproduce results, and issue the verdict that a performance claim may
+      be published. QA is the reviewer for Performance and Platform work and
+      holds a veto on publishing claims and on gating with unvalidated
+      components; the CEO/CTO arbitrates disputes.
     reports_to: ceo-cto
     owns:
-      - validation
-      - reproducibility
-      - experiment integrity
-      - regression gates
-      - performance claim verification
+      - experiment design review and approval for execution
+      - run integrity validation
+      - reproducibility checks
+      - approval to publish performance claims
+      - validation of product components before they gate anything
       - adversarial testing
       - AI conclusion validation
+      - playbooks from repeated failures
     participates_at:
       - experiment design
       - experiment execution
       - investigation review
       - release decision
     required_outputs:
-      - experiment-design challenge
-      - environment and dataset equivalence validation
+      - design challenges (H4)
+      - validation reports (H8)
+      - component validation results
       - reproducibility results
       - instability and measurement-error findings
-      - regression validation
-      - AI-conclusion review
-      - quality findings
+      - playbook updates
+    produces: [H4, H8]
+    consumes: [H1, H3, H6, H7, H11]
     adversarial_questions:
       - "Is the baseline valid?"
       - "Are the environments equivalent?"
@@ -226,7 +271,24 @@ roles:
       - "Did hardware change?"
       - "Can another run reproduce the result?"
     does_not_own:
+      - benchmark methodology and thresholds (reviews, does not set)
+      - content of performance conclusions
       - product roadmap
       - engine implementation
-      - final business decisions
-      - final performance conclusions
+      - final business and release decisions
+
+escalation_rules:
+  - condition: QA verdict is BLOCKED and the owning role disagrees
+    action: CEO/CTO arbitrates using both reports and may order a reproduction run
+  - condition: The same work item fails review twice
+    action: CEO/CTO replans or rescopes the work item
+  - condition: A run needs spend or resources outside the approved envelope
+    action: CEO/CTO escalates to the human founder (H9)
+  - condition: A destructive cloud action falls outside the automated ephemeral lifecycle
+    action: Require human founder approval before acting
+  - condition: Platform must deviate from an approved experiment spec
+    action: Return to Performance Lead and QA Lead before execution
+  - condition: Required evidence depends on customers or external access
+    action: CEO/CTO escalates to the human founder (H9)
+  - condition: A release is proposed
+    action: QA verdict, then CEO/CTO recommendation, then human founder approval

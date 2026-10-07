@@ -10,12 +10,14 @@ CEO / CTO
 
 ## Owns
 
+- Experiment design approval for execution
 - Validation
 - Reproducibility
-- Regression gates
+- Approval to publish performance claims (veto)
+- Validation of product components before they gate anything
 - Test strategy
 - Experiment integrity
-- Performance claim verification
+- Playbooks from repeated failures
 
 ## Responsibilities
 
@@ -46,15 +48,20 @@ Ask:
 
 ## Does Not Own
 
+- Benchmark methodology and thresholds (reviews, does not set)
+- Content of performance conclusions
 - Product roadmap
 - Engine implementation
-- Final business decisions
+- Final business and release decisions
 
 ## Required Outputs
 
-- Validation reports
-- Regression approvals/rejections
+- Design challenges (H4)
+- Validation reports (H8)
+- Component validation results
 - Reproduction results
-- Test plans
 - Quality findings
 
+## Handoffs
+
+See `company/org/handoff-contracts.md`. Produces H4, H8. Consumes H1, H3, H6, H7, H11. Reviewer for Performance Lead and Platform Lead.

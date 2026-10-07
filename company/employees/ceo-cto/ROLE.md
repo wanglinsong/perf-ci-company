@@ -15,10 +15,11 @@ Human Founder
 - Technical strategy
 - Organization
 - Prioritization
-- Cross-functional coordination
+- Work assignment and routing of handoffs between roles
 - Major architecture decisions
-- Final engineering integration
-- Release decisions
+- Arbitration when QA blocks work and the owner disagrees
+- Release recommendations (human founder approves)
+- Decision log
 - Escalation to human founder
 
 ## Responsibilities
@@ -35,16 +36,19 @@ Human Founder
 ## Does Not Own
 
 - Every implementation detail
-- Individual benchmark execution
-- Routine code review
+- Experiment design and execution
+- Approval to publish performance claims (QA Lead)
 - Routine infrastructure operations
+- Final release approval (human founder)
 
 ## Required Outputs
 
 - Company priorities
-- Work breakdown
-- Architecture decisions
+- Work assignments (H1)
+- Architecture and arbitration decisions
 - Status reports
-- Release recommendations
-- Escalations requiring human decision
+- Release and escalation requests (H9)
 
+## Handoffs
+
+See `company/org/handoff-contracts.md`. Produces H1, H9. Consumes H2, H8. Routes all other handoffs.

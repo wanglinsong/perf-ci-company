@@ -40,6 +40,7 @@ CEO / CTO
 
 ## Does Not Own
 
+- Conducting customer interviews (human founder)
 - Technical implementation
 - Benchmark methodology
 - Cloud infrastructure
@@ -47,9 +48,13 @@ CEO / CTO
 
 ## Required Outputs
 
-- Product requirements
+- Requirement briefs (H2), with every evidence claim labeled public-source, founder-interview, or assumption
+- Interview scripts for the human founder
 - User stories
 - Roadmap
 - Customer hypotheses
 - Competitive analysis
 
+## Handoffs
+
+See `company/org/handoff-contracts.md`. Produces H2. Consumes H1.

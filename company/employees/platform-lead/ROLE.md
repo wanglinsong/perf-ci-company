@@ -17,9 +17,11 @@ CEO / CTO
 - Workers
 - Cloud infrastructure
 - CI/CD
-- Experiment execution
+- Experiment execution (approved specs only)
 - Result storage
 - Observability
+- Cost controls within the founder-approved spend envelope
+- Implementation of product components to Performance Lead algorithm specs
 
 ## Primary Infrastructure
 
@@ -60,12 +62,15 @@ The platform decides:
 
 ## Does Not Own
 
-- Benchmark methodology
+- Benchmark methodology and thresholds
+- Statistical algorithm design
 - Customer requirements
-- Engine-level conclusions
+- Engine-level or performance conclusions
 
 ## Required Outputs
 
+- Run records (H6)
+- Component deliveries (H11)
 - Working infrastructure
 - APIs
 - Deployment automation
@@ -73,3 +78,6 @@ The platform decides:
 - Observability
 - Cost controls
 
+## Handoffs
+
+See `company/org/handoff-contracts.md`. Produces H6, H11. Consumes H1, H5, H10. Reviewed by QA Lead.

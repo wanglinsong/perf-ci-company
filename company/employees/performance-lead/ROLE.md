@@ -11,21 +11,21 @@ CEO / CTO
 
 ## Owns
 
-- Benchmark methodology
+- Benchmark methodology and statistical thresholds
 - Workload selection
-- Experimental design
+- Experiment specifications
 - Performance analysis
-- Regression detection
+- Regression detection and its algorithm specification
 - Statistical analysis
 - Cost/performance analysis
 - Performance investigation
+- Content of performance conclusions
 
 ## Primary Systems
 
 - Spark
 - Gluten
-- Trino
-- Presto
+- Future (Phase 4): Trino, Presto
 
 ## Responsibilities
 
@@ -40,6 +40,12 @@ CEO / CTO
 - Analyze CPU, memory, network, storage and GC behavior.
 - Generate root-cause hypotheses.
 - Recommend follow-up experiments.
+
+## Does Not Own
+
+- Experiment execution and infrastructure (Platform Lead)
+- Approval to execute experiments or publish claims (QA Lead)
+- Customer requirements
 
 ## Rules
 
@@ -65,3 +71,6 @@ Every investigation should produce:
 10. Confidence
 11. Recommended next experiment
 
+## Handoffs
+
+See `company/org/handoff-contracts.md`. Produces H3, H5, H7, H10. Consumes H1, H4, H6, H8, H11. Reviewed by QA Lead.
