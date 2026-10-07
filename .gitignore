@@ -1,5 +1,8 @@
 external/OpenOPC_workplace/
 
+# Local secrets loaded by bin/opc; see .env.example
+.env
+
 # OpenOPC home (OPC_HOME) for perf-ci: track config, ignore runtime state
 .opc/*
 !.opc/config/

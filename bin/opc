@@ -3,5 +3,15 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export OPC_HOME="$ROOT/.opc"
+
+# Load secrets (API keys, tokens) from the repo-root .env (gitignored) so
+# OpenOPC and the agents it launches see them. Tracked configs reference
+# them by variable name only (e.g. llm_config.yaml `api_key_env`).
+if [ -f "$ROOT/.env" ]; then
+  set -a
+  # shellcheck disable=SC1091
+  . "$ROOT/.env"
+  set +a
+fi
 cd "$ROOT/external/OpenOPC"
 exec uv run opc "$@"

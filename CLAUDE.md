@@ -21,7 +21,7 @@
 
 All Perf CI runtime lives in this repo. `.opc/` is OpenOPC's `OPC_HOME`:
 
-- `.opc/config/` — runtime config, all tracked (including `llm_config.yaml` and `channel_config.yaml`). Credential fields stay empty: supply keys via environment variables (e.g. `api_key_env`). The `.githooks/pre-commit` hook blocks commits that fill in a key/token/secret/password field — enable it once per clone with `git config core.hooksPath .githooks`
+- `.opc/config/` — runtime config, all tracked (including `llm_config.yaml` and `channel_config.yaml`). Credential fields stay empty: put keys in the repo-root `.env` (gitignored; template in `.env.example`), which `bin/opc` loads, and reference them by variable name (e.g. `api_key_env`). The `.githooks/pre-commit` hook blocks commits that fill in a key/token/secret/password field — enable it once per clone with `git config core.hooksPath .githooks`
 - `.opc/config/company_orgs/org_perf_ci_config.yaml` — the `perf_ci` org (tracked)
 - `.opc/config/workplaces.yaml` — maps project `perf-ci` to this repo root, so agents work here
 - `.opc/projects/perf-ci/`, `*.db`, `logs/` — runtime state (gitignored), except the tracked files below
@@ -71,7 +71,7 @@ llm:
   reasoning_effort: null
 ```
 
-Or use Anthropic (requires API credit; the key comes from `ANTHROPIC_API_KEY`, never the file):
+Or use Anthropic (requires API credit; set `ANTHROPIC_API_KEY` in `.env`, never in the file):
 
 ```yaml
 llm:
@@ -89,7 +89,7 @@ llm:
   reasoning_effort: null
 ```
 
-Requires `ANTHROPIC_API_KEY` in your shell environment.
+Requires `ANTHROPIC_API_KEY` in `.env` (or your shell environment).
 
 ### Org config
 
