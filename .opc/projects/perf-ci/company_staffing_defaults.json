@@ -1,0 +1,39 @@
+{
+  "scopes": {
+    "profile:custom|org:perf_ci": {
+      "company_profile": "custom",
+      "org_id": "perf_ci",
+      "recruitment_role_agents": {
+        "ceo-cto": "claude_code",
+        "product-lead": "claude_code",
+        "performance-lead": "claude_code",
+        "platform-lead": "claude_code",
+        "qa-lead": "claude_code"
+      },
+      "staffing_selections": {
+        "ceo-cto": {
+          "id": "",
+          "kind": "fallback"
+        },
+        "product-lead": {
+          "id": "",
+          "kind": "fallback"
+        },
+        "performance-lead": {
+          "id": "",
+          "kind": "fallback"
+        },
+        "platform-lead": {
+          "id": "",
+          "kind": "fallback"
+        },
+        "qa-lead": {
+          "id": "",
+          "kind": "fallback"
+        }
+      }
+    }
+  },
+  "updated_at": "",
+  "version": 1
+}

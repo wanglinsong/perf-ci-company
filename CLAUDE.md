@@ -24,8 +24,15 @@ All Perf CI runtime lives in this repo. `.opc/` is OpenOPC's `OPC_HOME`:
 - `.opc/config/` — runtime config (tracked); `llm_config.yaml` and `channel_config.yaml` are gitignored
 - `.opc/config/company_orgs/org_perf_ci_config.yaml` — the `perf_ci` org (tracked)
 - `.opc/config/workplaces.yaml` — maps project `perf-ci` to this repo root, so agents work here
-- `.opc/projects/perf-ci/`, `.opc/company_state/`, `*.db`, `logs/` — runtime state (gitignored)
-- `.opc/skills`, `.opc/prompts/talent` — symlinks into the OpenOPC submodule
+- `.opc/projects/perf-ci/`, `*.db`, `logs/` — runtime state (gitignored), except the tracked files below
+- `.opc/skills/` — system skills (tracked; seeded from OpenOPC's built-in skills, now owned here)
+- Employee experience (tracked — review diffs like AGENT.md edits; commit while the server is idle):
+  - `.opc/company_state/perf_ci/employees/*.yaml` — hired employees
+  - `.opc/company_state/perf_ci/employee_experience/*.json` — per-employee learned profile
+  - `.opc/projects/perf-ci/employee_evolution.json`, `.opc/evolution/employees.json` — experience scores and reflections
+  - `.opc/projects/perf-ci/skills/` — learned playbook skills promoted from repeated reflections
+  - `.opc/projects/perf-ci/company_staffing_defaults.json` — saved staffing choices
+- `.opc/prompts/talent/` — talent templates imported from `external/agency-agents` (gitignored cache). After updating the agency-agents submodule, refresh with `bin/opc talent import "$PWD/external/agency-agents"`
 
 ### Start the server
 
@@ -75,9 +82,17 @@ Each role's prompt is assembled from three files, listed in that role's `prompt_
 
 Put responsibilities in ROLE.md, working style in AGENT.md, and anything phase-specific in `current-focus.md`.
 
+### Talent profiles vs. AGENT.md
+
+- **ROLE.md** (what) always applies to whoever fills the seat.
+- **AGENT.md** (how) is the role's baseline working style; a Default Employee gets only this.
+- **A hired talent profile** (from `external/agency-agents`) is added on top as an "Employee Persona" — an extra specialization, not a replacement. It also accumulates an experience profile across runs.
+- Hire talent deliberately via **Org → Hire Talent**, choosing a profile that fits the role. Never let chat "recruit" auto-match by keywords.
+- To add a Perf CI–specific profile, add it to the agency-agents fork, then re-import. Profiles must not claim ownership; ROLE.md wins on conflict.
+
 ### Staffing — use Default Employee
 
-When the staffing dialog appears before a company run, always pick **Default Employee** for each role. This uses the role's `prompt_refs` (ROLE.md, AGENT.md, current-focus.md) directly. Do NOT let OPC auto-recruit from the talent market — it will pick an unrelated template (e.g. "Anthropologist") that overrides the role's personality.
+When the staffing dialog appears before a company run, pick **Default Employee** for each role unless you deliberately hired a talent profile for that role (see above). Default Employee uses only the role's `prompt_refs` (ROLE.md, AGENT.md, current-focus.md). Do NOT let OPC auto-recruit from the talent market — keyword matching picks unrelated templates (e.g. "Anthropologist", or "Performance Benchmarker" for QA).
 
 ### Stale state cleanup
 
