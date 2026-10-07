@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Run OpenOPC with this repo's .opc as OPC_HOME, e.g. `bin/opc ui --project perf-ci`.
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export OPC_HOME="$ROOT/.opc"
+cd "$ROOT/external/OpenOPC"
+exec uv run opc "$@"

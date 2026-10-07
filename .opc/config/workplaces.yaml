@@ -1,0 +1,4 @@
+# Per-project workplace overrides; relative paths resolve against OPC_HOME.
+# Agents for perf-ci work in the perf-ci-company repo root.
+workplaces:
+  perf-ci: ..

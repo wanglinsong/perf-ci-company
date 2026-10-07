@@ -1,2 +1,13 @@
-.opc/
 external/OpenOPC_workplace/
+
+# OpenOPC home (OPC_HOME) for perf-ci: track config, ignore runtime state
+.opc/*
+!.opc/config/
+.opc/config/company_orgs/*
+!.opc/config/company_orgs/org_perf_ci_config.yaml
+.opc/config/llm_config.yaml
+.opc/config/channel_config.yaml
+!.opc/memory/
+!.opc/skills
+!.opc/prompts/
+.opc-comms/

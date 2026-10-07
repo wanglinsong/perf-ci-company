@@ -1,0 +1,297 @@
+schema_version: 2
+kind: opc_org_architecture
+organization_id: perf_ci
+organization_name: Perf CI
+company:
+  name: Perf CI
+  topology: Performance Engineering Company
+  company_profile: custom
+  execution_model: actor_runtime
+  final_decider_role_id: ceo-cto
+  company_profiles:
+  - corporate
+  - custom
+roles:
+- id: ceo-cto
+  name: CEO / CTO
+  responsibility: 'Turn the company mission into a working product and sustainable business.
+    Own company strategy, technical strategy, organization, prioritization, architecture decisions,
+    work assignment and routing between roles, arbitration of QA disputes, release recommendations,
+    and escalation to the human founder.
+
+    '
+  reports_to: human-founder
+  icon: null
+  can_spawn: []
+  tools: []
+  preferred_external_agent: claude_code
+  prompt_refs:
+  - ../company/employees/ceo-cto/ROLE.md
+  - ../company/employees/ceo-cto/AGENT.md
+  - ../company/current-focus.md
+  skill_refs: []
+  handoff_template_ref: company/org/handoff-contracts.md
+  memory_policy_ref: null
+  artifact_contract_ref: H1 Work Assignment, H9 Release/Escalation Request (company/org/handoff-contracts.md)
+  runtime_policy:
+    execution_strategy: auto
+    allowed_downstream_roles:
+    - product-lead
+    - performance-lead
+    - platform-lead
+    - qa-lead
+    review_role: null
+    default_turn_type: work
+    shell_timeout_override: null
+    setup_env_type: null
+    coordination_hints: {}
+    signal_capabilities: []
+    parallelism_constraints: []
+    gate_preferences: {}
+  capabilities: []
+  role_type: coordinator
+  coordinator_policy: null
+- id: product-lead
+  name: Product Lead
+  responsibility: 'Identify valuable data-infrastructure performance problems and translate
+    them into products customers will pay for. Own customer problems, requirements, roadmap,
+    pricing hypotheses, competitive analysis, positioning, and MVP scope. Prepare customer
+    discovery; the human founder conducts interviews.
+
+    '
+  reports_to: ceo-cto
+  icon: null
+  can_spawn: []
+  tools: []
+  preferred_external_agent: claude_code
+  prompt_refs:
+  - ../company/employees/product-lead/ROLE.md
+  - ../company/employees/product-lead/AGENT.md
+  - ../company/current-focus.md
+  skill_refs: []
+  handoff_template_ref: company/org/handoff-contracts.md
+  memory_policy_ref: null
+  artifact_contract_ref: H2 Requirement Brief (company/org/handoff-contracts.md)
+  runtime_policy:
+    execution_strategy: auto
+    allowed_downstream_roles: []
+    review_role: null
+    default_turn_type: work
+    shell_timeout_override: null
+    setup_env_type: null
+    coordination_hints: {}
+    signal_capabilities: []
+    parallelism_constraints: []
+    gate_preferences: {}
+  capabilities: []
+  role_type: worker
+  coordinator_policy: null
+- id: performance-lead
+  name: Principal Performance Engineer
+  responsibility: 'Determine whether distributed data system changes improve or degrade real
+    workloads, quantify the effect, and explain why through evidence. Own benchmark methodology
+    and thresholds, workload selection, experiment specifications, statistical analysis, engine-level
+    investigation, and the content of performance conclusions. Specify the algorithms that
+    product components implement. Platform executes runs; QA approves designs and claims.
+
+    '
+  reports_to: ceo-cto
+  icon: null
+  can_spawn: []
+  tools: []
+  preferred_external_agent: claude_code
+  prompt_refs:
+  - ../company/employees/performance-lead/ROLE.md
+  - ../company/employees/performance-lead/AGENT.md
+  - ../company/current-focus.md
+  skill_refs: []
+  handoff_template_ref: company/org/handoff-contracts.md
+  memory_policy_ref: null
+  artifact_contract_ref: H3 Experiment Spec, H5 Run Request, H7 Investigation Report, H10
+    Algorithm Spec (company/org/handoff-contracts.md)
+  runtime_policy:
+    execution_strategy: auto
+    allowed_downstream_roles: []
+    review_role: qa-lead
+    default_turn_type: work
+    shell_timeout_override: null
+    setup_env_type: null
+    coordination_hints: {}
+    signal_capabilities: []
+    parallelism_constraints: []
+    gate_preferences: {}
+  capabilities: []
+  role_type: worker
+  coordinator_policy: null
+- id: platform-lead
+  name: Platform Engineering Lead
+  responsibility: 'Build reliable infrastructure that provisions, executes, observes, and
+    stores performance experiments deterministically. Execute approved experiment specifications
+    exactly, and build the product components (CI check, regression analyzer, reports) to
+    the Performance Lead''s algorithm specifications. Operate within a founder-approved cloud
+    spend envelope.
+
+    '
+  reports_to: ceo-cto
+  icon: null
+  can_spawn: []
+  tools: []
+  preferred_external_agent: claude_code
+  prompt_refs:
+  - ../company/employees/platform-lead/ROLE.md
+  - ../company/employees/platform-lead/AGENT.md
+  - ../company/current-focus.md
+  skill_refs: []
+  handoff_template_ref: company/org/handoff-contracts.md
+  memory_policy_ref: null
+  artifact_contract_ref: H6 Run Record, H11 Component Delivery (company/org/handoff-contracts.md)
+  runtime_policy:
+    execution_strategy: auto
+    allowed_downstream_roles: []
+    review_role: qa-lead
+    default_turn_type: work
+    shell_timeout_override: null
+    setup_env_type: null
+    coordination_hints: {}
+    signal_capabilities: []
+    parallelism_constraints: []
+    gate_preferences: {}
+  capabilities: []
+  role_type: worker
+  coordinator_policy: null
+- id: qa-lead
+  name: Performance QA Lead
+  responsibility: 'Prevent incorrect performance claims. Review every experiment design before
+    execution, validate run integrity, independently recompute and reproduce results, and
+    issue the verdict that a performance claim may be published. QA is the reviewer for Performance
+    and Platform work and holds a veto on publishing claims and on gating with unvalidated
+    components; the CEO/CTO arbitrates disputes.
+
+    '
+  reports_to: ceo-cto
+  icon: null
+  can_spawn: []
+  tools: []
+  preferred_external_agent: claude_code
+  prompt_refs:
+  - ../company/employees/qa-lead/ROLE.md
+  - ../company/employees/qa-lead/AGENT.md
+  - ../company/current-focus.md
+  skill_refs: []
+  handoff_template_ref: company/org/handoff-contracts.md
+  memory_policy_ref: null
+  artifact_contract_ref: H4 Design Challenge, H8 Validation Report (company/org/handoff-contracts.md)
+  runtime_policy:
+    execution_strategy: auto
+    allowed_downstream_roles: []
+    review_role: null
+    default_turn_type: work
+    shell_timeout_override: null
+    setup_env_type: null
+    coordination_hints: {}
+    signal_capabilities: []
+    parallelism_constraints: []
+    gate_preferences: {}
+  capabilities: []
+  role_type: worker
+  coordinator_policy: null
+employees: []
+escalation_rules:
+- condition: QA verdict is BLOCKED and the owning role disagrees
+  action: CEO/CTO arbitrates using both reports and may order a reproduction run
+- condition: The same work item fails review twice
+  action: CEO/CTO replans or rescopes the work item
+- condition: A run needs spend or resources outside the approved envelope
+  action: CEO/CTO escalates to the human founder (H9)
+- condition: A destructive cloud action falls outside the automated ephemeral lifecycle
+  action: Require human founder approval before acting
+- condition: Platform must deviate from an approved experiment spec
+  action: Return to Performance Lead and QA Lead before execution
+- condition: Required evidence depends on customers or external access
+  action: CEO/CTO escalates to the human founder (H9)
+- condition: A release is proposed
+  action: QA verdict, then CEO/CTO recommendation, then human founder approval
+runtime_policies:
+  custom:
+    communication:
+      default_mode: dm
+      blocking_default: false
+      meeting_required_for: []
+      allow_broadcast: true
+    memory:
+      include_role_memory: true
+      include_project_memory: true
+      include_decision_log: true
+      include_artifact_index: true
+      recent_history_lines: 12
+    handoff:
+      require_structured_handoff: true
+      require_ack: true
+      include_risks: true
+      include_open_questions: true
+    artifact:
+      enforce_contract: false
+      require_artifact_index: true
+      required_kinds: []
+    review:
+      enable_work_item_gates: true
+      strict_gate_inference: false
+      require_reviewer_role: true
+      allow_human_override: true
+    gate_harness:
+      enabled: true
+      decision_mode: hybrid
+      default_degrade_policy: allow
+      auto_infer_turn_kind: true
+      auto_infer_gate_profile: true
+      max_rework_rounds_per_issue: 2
+      stagnation_threshold: 2
+      allow_pass_with_constraints: true
+      enable_delivery_constraints_propagation: true
+      agent_model: ''
+      agent_confidence_threshold: 0.55
+      fallback_to_rules_on_parse_error: true
+      builtin_blocker_map:
+        workspace_mismatch: rework_same_work_item
+        missing_required_artifact: rework_same_work_item
+        verification_missing: rework_same_work_item
+        dependency_not_ready: rework_same_work_item
+        cross_work_item_conflict: replan
+        external_secret_missing: await_user_decision
+        permission_missing: escalate
+        environment_capability_gap: pass_with_constraints
+        quality_gap: rework_same_work_item
+        goal_env_mismatch: replan
+        unresolved_user_visible_risk: pass_with_constraints
+      turn_kind_overrides: {}
+      gate_profile_overrides: {}
+    parallel:
+      auto_dispatch: true
+      review_gate_enabled: true
+      max_workers: 10
+    coordination:
+      inference_mode: llm_primary
+      fallback_mode: conservative
+      strict_gate_turn_kinds:
+      - verify
+      - deliver
+      mixed_gate_turn_kinds:
+      - synthesize
+      - review
+      - integration
+      allow_manager_release_for_mixed_only: true
+      allow_custom_signals: true
+talent_templates: []
+teams: []
+team_runtime:
+  default_team_id: ''
+  shared_role_session_scope: team
+  allow_shared_role_sessions: true
+  seat_refresh_interval_seconds: 30
+  metadata: {}
+external_team_bindings: []
+installed_packages: []
+role_serial_queue_enabled: true
+metadata:
+  source: org_mode
+  organization_config_file: company_orgs/org_perf_ci_config.yaml
