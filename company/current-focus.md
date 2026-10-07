@@ -1,6 +1,43 @@
 # Current Focus — Perf CI
 
+**Last updated:** 2026-10-07  
+**Phase:** Phase 1 (Build the AI Engineering Company)
+
 Current-phase context for every role. Update this file when the phase or priorities change; ROLE.md and AGENT.md should not carry phase-specific tasks.
+
+---
+
+## Current Status (2026-10-07)
+
+| Area | State | Notes |
+|------|-------|-------|
+| **Wedge doc** (`issue-0001-wedge-validation.md`) | Draft (2026-10-02) | No execution started |
+| **Product Lead** | Not started — scripts/targets prep needed | S2 (customer problem confirmed) is the highest-priority wedge risk; the human founder conducts discovery calls, Product Lead prepares scripts and target list |
+| **Performance Lead** | Not started — version pair identification needed | Must identify Gluten version pair first — blocks Platform spike + QA H4 review |
+| **Platform Lead** | Not started — EC2 provisioning spike needed | Can begin in parallel once version pair is identified |
+| **QA Lead** | Strategy drafted (qa-strategy-v1) | Will perform H4 design review once Performance Lead delivers experiment spec |
+| **S1 (Technical feasibility)** | Not started | Depends on Performance + Platform execution |
+| **S2 (Customer problem confirmed)** | Not started | the human founder conducts discovery calls; Product Lead prepares scripts/targets (#1 priority) |
+| **S3 (Willingness to pay)** | Not started | Requires S2 results first |
+
+### Intake Artifacts (Complete 2026-10-03)
+
+| Artifact | Path | Status |
+|----------|------|--------|
+| CEO/CTO Intake Report v1 | `company/CEO-CTO-intake-report-v1.md` | Complete |
+| Product Brief v1 | `external/perf-ci-infra/product/product-brief-v1.md` | Complete |
+| Experiment Methodology v1 | `external/perf-ci-infra/experiments/methodology-v1.md` | Complete |
+| Platform Brief v1 | `external/perf-ci-infra/infra/platform-brief-v1.md` | Complete |
+| QA Strategy v1 | `external/perf-ci-infra/qa/qa-strategy-v1.md` | Complete |
+
+### Priority Order (CEO/CTO decision — updated 2026-10-07)
+
+1. **Product Lead** — Prepare discovery scripts and target list; the human founder conducts customer interviews (de-risks entire wedge)
+2. **Performance Lead** — Identify Gluten version pair (unblocks Platform spike + QA H4 review)
+3. **Platform Lead** — Spike EC2 provisioning via Pulumi (parallel with #2 once unblocked)
+4. **QA Lead** — H4 design review of experiment spec (after Perf Lead delivers)
+
+---
 
 ## Product Lead
 
@@ -13,7 +50,9 @@ The company's current focus is Spark + Gluten performance regression detection. 
 - **MVP:** Single-node TPC-DS SF=10 regression detection with statistical analysis, delivered as a GitHub Actions check
 - **Validation gap:** Customer confirmation (S2) and willingness-to-pay signal (S3) not yet obtained — this is the current priority
 
-Customer discovery interviews should target engineers at teams known to operate Gluten in production. You prepare the interview scripts and target list; the human founder conducts the interviews. Scripts and founder-provided notes go in `external/perf-ci-infra/product/discovery/`.
+**Discovery call process:** Product Lead prepares interview scripts and target list; the human founder conducts the interviews. Scripts and founder-provided notes go in `external/perf-ci-infra/product/discovery/`. 
+
+CEO H9 for customer access: see `company/decisions/2026-10-07-customer-access-escalation.md`
 
 ## Principal Performance Engineer
 
@@ -42,3 +81,7 @@ From `external/perf-ci-infra/product/issue-0001-wedge-validation.md`:
 - **Reporting:** GitHub Actions summary with per-query latency comparison
 
 First task: spike EC2 provisioning via Pulumi for a single ephemeral benchmark node. Output: working Pulumi script in `external/perf-ci-infra/infra/`.
+
+### ARM vs x86 Consideration
+
+The MVP specifies m7g.4xlarge (ARM-based Graviton). This raises a question about whether benchmark results on ARM generalize to x86 production deployments. See H9 escalation in `company/decisions/2026-10-07-arm-vs-x86-escalation.md`.

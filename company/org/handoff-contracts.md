@@ -47,6 +47,21 @@ the runtime, QA is the configured reviewer for Performance and Platform work.
 
 ---
 
+## Artifact Ownership
+
+The runtime enforces one writer per file per run:
+
+- A file belongs to the work item (step) that first writes it in a run.
+- A later step of the **same role** may revise it only once the owning step
+  is finished (approved, failed, or cancelled) — e.g. the CEO/CTO's delivery
+  step correcting files written at intake.
+- Files owned by **another role** are never edited directly. Request the
+  change from the owning role through the CEO/CTO (H1), or record the needed
+  correction in your own artifact.
+- If a write is refused as "owned by another durable WorkItem", do not retry
+  or try to delete work items; report it in your result (or as an H9 if it
+  blocks delivery).
+
 ## H1 — Work Assignment (CEO/CTO → any IC)
 
 - **ID** and **owner role** (exactly one)

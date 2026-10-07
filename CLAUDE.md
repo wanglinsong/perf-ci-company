@@ -119,6 +119,10 @@ Put responsibilities in ROLE.md, working style in AGENT.md, and anything phase-s
 
 When the staffing dialog appears before a company run, pick **Default Employee** for each role unless you deliberately hired a talent profile for that role (see above). Default Employee uses only the role's `prompt_refs` (ROLE.md, AGENT.md, current-focus.md). Do NOT click **Auto recruit** (the UI recommends it whenever templates exist): it depends on OpenOPC's LLM, and when that fails it assigns the alphabetically first template ("Anthropologist") to every role. Do NOT let OPC auto-recruit from the talent market — keyword matching picks unrelated templates (e.g. "Anthropologist", or "Performance Benchmarker" for QA).
 
+### Artifact ownership conflicts
+
+OpenOPC records one owner per file per run (`company_artifact_ownership` in `tasks.db`). An agent write refused with "artifact path is owned by another durable WorkItem" means another step owns the file. The OpenOPC fork lets a later same-role step take over once the owner is approved/failed/cancelled; cross-role writes stay blocked by design (see `company/org/handoff-contracts.md`, Artifact Ownership).
+
 ### Stale state cleanup
 
 If the Office view shows wrong agents (e.g. "Anthropologist" on all roles):
