@@ -135,7 +135,8 @@ p = ','.join('?'*len(STALE_RUNS))
 conn = sqlite3.connect('./.opc/projects/perf-ci/tasks.db')
 cur = conn.cursor()
 for t in ['delegation_role_sessions','delegation_runs','delegation_cells',
-          'delegation_work_items','delegation_events','team_instances','seat_states']:
+          'delegation_work_items','delegation_events','team_instances','seat_states',
+          'role_runtime_sessions']:  # role_runtime_sessions: else an orphan character shows in Office
     try: cur.execute(f'DELETE FROM {t} WHERE run_id IN ({p})', STALE_RUNS)
     except: pass
 conn.commit(); conn.close()
@@ -146,6 +147,11 @@ sqlite3 ./.opc/projects/perf-ci/tasks.db \
   "DELETE FROM work_item_runtime_links WHERE work_item_id NOT IN (SELECT work_item_id FROM delegation_work_items);"
 sqlite3 ./.opc/projects/perf-ci/tasks.db \
   "DELETE FROM tasks WHERE metadata LIKE '%work_item_runtime%' AND metadata LIKE '%work_item_projection_id%' AND id NOT IN (SELECT runtime_task_id FROM work_item_runtime_links);"
+
+# Also remove leftovers keyed by the stale runs' task IDs (from delegation_work_items before
+# deleting, or from runtime_sessions): runtime_sessions, execution_checkpoints, agent_messages
+# (tasks.db) and task_progress (ui_state.db). Keep session_messages if the chat session is
+# still in use. Back up .opc/*.db and tasks.db first.
 
 # 3. Clear UI cache
 python3 -c "

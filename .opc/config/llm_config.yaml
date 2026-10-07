@@ -1,12 +1,12 @@
 llm:
-  default_model: openai/qwen3.6:latest
   api_base: http://ollama:11434/v1
   api_key: ''
   api_key_env: OLLAMA_API_KEY
   context_window: 32768
   context_window_overrides: {}
-  max_tokens: 8192
-  temperature: 0.3
-  routing: {}
+  default_model: openai/qwen3.6:latest
   fallback: {}
+  max_tokens: 8192
   reasoning_effort: null
+  routing: {}
+  temperature: 0.3
