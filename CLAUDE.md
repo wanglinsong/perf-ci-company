@@ -21,7 +21,7 @@
 
 All Perf CI runtime lives in this repo. `.opc/` is OpenOPC's `OPC_HOME`:
 
-- `.opc/config/` — runtime config (tracked); `llm_config.yaml` and `channel_config.yaml` are gitignored
+- `.opc/config/` — runtime config, all tracked (including `llm_config.yaml` and `channel_config.yaml`). Credential fields stay empty: supply keys via environment variables (e.g. `api_key_env`). The `.githooks/pre-commit` hook blocks commits that fill in a key/token/secret/password field — enable it once per clone with `git config core.hooksPath .githooks`
 - `.opc/config/company_orgs/org_perf_ci_config.yaml` — the `perf_ci` org (tracked)
 - `.opc/config/workplaces.yaml` — maps project `perf-ci` to this repo root, so agents work here
 - `.opc/projects/perf-ci/`, `*.db`, `logs/` — runtime state (gitignored), except the tracked files below
@@ -55,7 +55,7 @@ OpenOPC and all agent tool use (file edits, shell) run on this Mac, in this repo
 
 ### LLM config
 
-`.opc/config/llm_config.yaml` is gitignored (per machine). OpenOPC's own LLM drives intake, coordination, gates, and auto-recruit — if it fails, runs fail at CEO intake. Point it at Ollama (`http://ollama:11434`):
+`.opc/config/llm_config.yaml` (tracked; never put a key in `api_key`). OpenOPC's own LLM drives intake, coordination, gates, and auto-recruit — if it fails, runs fail at CEO intake. Point it at Ollama (`http://ollama:11434`):
 
 ```yaml
 llm:
@@ -71,7 +71,7 @@ llm:
   reasoning_effort: null
 ```
 
-Or use Anthropic (requires API credit):
+Or use Anthropic (requires API credit; the key comes from `ANTHROPIC_API_KEY`, never the file):
 
 ```yaml
 llm:

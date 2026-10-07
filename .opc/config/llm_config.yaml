@@ -1,0 +1,12 @@
+llm:
+  default_model: ollama_chat/qwen3.6:latest
+  api_base: http://ollama:11434
+  api_key: ''
+  api_key_env: ''
+  context_window: 32768
+  context_window_overrides: {}
+  max_tokens: 8192
+  temperature: 0.3
+  routing: {}
+  fallback: {}
+  reasoning_effort: null

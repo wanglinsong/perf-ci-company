@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Block commits that put credentials into tracked config files.
+# Credential fields must stay empty; supply secrets via environment variables
+# (e.g. llm_config.yaml `api_key_env`).
+set -euo pipefail
+status=0
+while IFS= read -r file; do
+  case "$file" in
+    .opc/config/*.yaml|.opc/config/*/*.yaml|*.json) ;;
+    *) continue ;;
+  esac
+  hits=$(git show ":$file" 2>/dev/null | grep -nE \
+    -e "^[[:space:]]*(api_key|token|[a-z_]*_token|[a-z_]*secret|[a-z_]*password|encrypt_key)[[:space:]]*:[[:space:]]*[^[:space:]#]" \
+    -e "\"(apiKey|api_key|token|[a-zA-Z_]*[Tt]oken|[a-zA-Z_]*[Ss]ecret|[a-zA-Z_]*[Pp]assword)\"[[:space:]]*:[[:space:]]*\"[^\"]+\"" \
+    | grep -vE ":[[:space:]]*(''|\"\"|null|~)[[:space:]]*(#.*)?$" || true)
+  if [ -n "$hits" ]; then
+    echo "pre-commit: credential value in $file (line numbers below; values not shown):" >&2
+    echo "$hits" | cut -d: -f1 | sed 's/^/  line /' >&2
+    status=1
+  fi
+done < <(git diff --cached --name-only --diff-filter=ACM)
+if [ "$status" -ne 0 ]; then
+  echo "Keep credential fields empty and use environment variables instead." >&2
+fi
+exit "$status"

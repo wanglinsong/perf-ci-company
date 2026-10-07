@@ -5,8 +5,6 @@ external/OpenOPC_workplace/
 !.opc/config/
 .opc/config/company_orgs/*
 !.opc/config/company_orgs/org_perf_ci_config.yaml
-.opc/config/llm_config.yaml
-.opc/config/channel_config.yaml
 !.opc/memory/
 !.opc/skills/
 # Employee experience and learned skills (review diffs like AGENT.md edits)
