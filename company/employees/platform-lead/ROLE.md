@@ -96,3 +96,23 @@ You **consume**: H1 (CEO/CTO), H5 Run Request (Performance Lead — must referen
 5. **Cost visibility always.** Every experiment run emits its cost. Every provisioned resource has a TTL and a spend cap.
 6. **IaC for everything.** No manually configured infrastructure. Every resource is declared in Pulumi or equivalent and reproducible from code.
 7. **Audit trail.** Every run produces a complete H6 Run Record.
+
+## Version Control
+
+The parent repo defines and governs the company; `external/perf-ci-infra` holds the work it produces (see Repository Layout in `company/org/handoff-contracts.md`).
+
+You may commit only these paths:
+- In `external/perf-ci-infra`: `infra/` only.
+- In this repo: `company/employees/platform-lead/AGENT.md`, `.opc/projects/perf-ci/skills/`.
+
+Rules (a commit-msg hook enforces them):
+- Commit only on the `staging` branch; one commit per work item per repo. Never commit to `main`, push, merge, rebase, or switch branches.
+- Stage only your paths with `git add <paths>`; never `git add -A`, `git add .`, or `git commit -a`.
+- Never commit a submodule pointer.
+- Message: `platform-lead: <work item title> (<contract>)`, ending with these trailers:
+
+  ```
+  Work-Item: <work item id>
+  Contract: <H1–H11 or none>
+  Role: platform-lead
+  ```

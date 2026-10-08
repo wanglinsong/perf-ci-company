@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+# Enforce the Repository Layout in company/org/handoff-contracts.md:
+# a commit with a `Role:` trailer may only touch that role's paths.
+# Commits authored as the agent identity must carry a `Role:` trailer.
+# Founder / Claude Code commits (no Role trailer, own identity) pass through.
+set -euo pipefail
+
+AGENT_AUTHOR_NAME="Perf CI Agent"
+msg_file="$1"
+
+role="$(git interpret-trailers --parse < "$msg_file" | sed -n 's/^Role:[[:space:]]*//p' | tail -1 | tr -d '[:space:]')"
+author="${GIT_AUTHOR_NAME:-$(git var GIT_AUTHOR_IDENT | sed 's/ <.*//')}"
+
+if [ -z "$role" ]; then
+  if [ "$author" = "$AGENT_AUTHOR_NAME" ]; then
+    echo "commit-msg: agent commits must end with a 'Role: <role-id>' trailer (see your ROLE.md, Version Control)." >&2
+    exit 1
+  fi
+  exit 0
+fi
+
+toplevel="$(git rev-parse --show-toplevel)"
+if [ -d "$toplevel/company/org" ]; then
+  repo="parent"
+elif [ "$(basename "$toplevel")" = "perf-ci-infra" ]; then
+  repo="infra"
+else
+  exit 0
+fi
+
+# Allowed path prefixes per role and repo (space-separated).
+case "$repo:$role" in
+  infra:ceo-cto)          allowed="" ;;
+  infra:product-lead)     allowed="product/" ;;
+  infra:performance-lead) allowed="experiments/" ;;
+  infra:platform-lead)    allowed="infra/" ;;
+  infra:qa-lead)          allowed="qa/" ;;
+  parent:ceo-cto)         allowed="company/decisions/ company/current-focus.md company/employees/ceo-cto/AGENT.md .opc/projects/perf-ci/skills/" ;;
+  parent:product-lead|parent:performance-lead|parent:platform-lead|parent:qa-lead)
+                          allowed="company/employees/$role/AGENT.md .opc/projects/perf-ci/skills/" ;;
+  *)
+    echo "commit-msg: unknown role '$role' in Role trailer." >&2
+    exit 1
+    ;;
+esac
+
+violations=""
+while IFS= read -r path; do
+  [ -z "$path" ] && continue
+  ok=0
+  for prefix in $allowed; do
+    case "$path" in
+      "$prefix"|"$prefix"*) ok=1; break ;;
+    esac
+  done
+  if [ "$ok" -eq 0 ]; then
+    violations="$violations
+  $path"
+  fi
+done < <(git diff --cached --name-only)
+
+if [ -n "$violations" ]; then
+  echo "commit-msg: role '$role' may not commit these paths in this repo:$violations" >&2
+  if [ -n "$allowed" ]; then
+    echo "Allowed: $allowed" >&2
+  else
+    echo "This role commits nothing in this repo." >&2
+  fi
+  echo "Unstage them (git restore --staged <path>) and commit only your own work." >&2
+  exit 1
+fi
+exit 0

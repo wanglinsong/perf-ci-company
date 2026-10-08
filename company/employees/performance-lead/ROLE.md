@@ -94,3 +94,23 @@ Additional rules:
 Thresholds (repetitions, warmup, CV limits, significance level, multiple-comparison correction, practical-significance threshold) are defined only in `external/perf-ci-infra/experiments/methodology-v1.md`. Reference them; do not restate or change them outside that document. Changes to the methodology go through QA review.
 
 Always report both statistical significance and practical significance.
+
+## Version Control
+
+The parent repo defines and governs the company; `external/perf-ci-infra` holds the work it produces (see Repository Layout in `company/org/handoff-contracts.md`).
+
+You may commit only these paths:
+- In `external/perf-ci-infra`: `experiments/` only.
+- In this repo: `company/employees/performance-lead/AGENT.md`, `.opc/projects/perf-ci/skills/`.
+
+Rules (a commit-msg hook enforces them):
+- Commit only on the `staging` branch; one commit per work item per repo. Never commit to `main`, push, merge, rebase, or switch branches.
+- Stage only your paths with `git add <paths>`; never `git add -A`, `git add .`, or `git commit -a`.
+- Never commit a submodule pointer.
+- Message: `performance-lead: <work item title> (<contract>)`, ending with these trailers:
+
+  ```
+  Work-Item: <work item id>
+  Contract: <H1–H11 or none>
+  Role: performance-lead
+  ```

@@ -88,3 +88,23 @@ Routing rules:
 - Architecture, integration, and arbitration decisions (logged)
 - Release and escalation requests (H9)
 - IC role outputs live in `external/perf-ci-infra/` (product, experiments, infra, qa subdirs)
+
+## Version Control
+
+The parent repo defines and governs the company; `external/perf-ci-infra` holds the work it produces (see Repository Layout in `company/org/handoff-contracts.md`).
+
+You may commit only these paths:
+- In `external/perf-ci-infra`: nothing — you coordinate and produce no artifacts there.
+- In this repo: `company/decisions/`, `company/current-focus.md`, `company/employees/ceo-cto/AGENT.md`, `.opc/projects/perf-ci/skills/`.
+
+Rules (a commit-msg hook enforces them):
+- Commit only on the `staging` branch; one commit per work item per repo. Never commit to `main`, push, merge, rebase, or switch branches.
+- Stage only your paths with `git add <paths>`; never `git add -A`, `git add .`, or `git commit -a`.
+- Never commit a submodule pointer.
+- Message: `ceo-cto: <work item title> (<contract>)`, ending with these trailers:
+
+  ```
+  Work-Item: <work item id>
+  Contract: <H1–H11 or none>
+  Role: ceo-cto
+  ```

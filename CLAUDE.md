@@ -15,6 +15,19 @@
 
 **Otherwise** (a Claude Code session started by the human founder): your job in this repo is **company structure and repo management only**. The OPC agents (CEO/CTO, Product Lead, Performance Lead, Platform Lead, QA Lead) do the actual product and engineering work. Do not implement work items directly — create issues and let OPC agents execute them.
 
+## Development workflow
+
+**The parent repo defines and governs the company; `external/perf-ci-infra` holds the work it produces.** Which role may commit which paths is in `company/org/handoff-contracts.md` (Repository Layout).
+
+All changes — OPC agent work and Claude Code repo management — go through `staging` and a reviewed pull request:
+
+1. Work is committed on the `staging` branch, in this repo and in `external/perf-ci-infra`. Agents commit their own deliverables there (rules in every ROLE.md, "Version Control").
+2. `.githooks/commit-msg` rejects agent commits (author `Perf CI Agent`, set by `bin/opc`) without a `Role:` trailer or touching paths outside that role's layout. `.githooks/pre-commit` blocks commits to `main` in both repos (founder override: `ALLOW_MAIN_COMMIT=1 git commit ...`). Enable hooks once per clone: `git config core.hooksPath .githooks` here and `git -C external/perf-ci-infra config core.hooksPath ../../.githooks`.
+3. When a run's work is ready, push `staging` and open a PR to `main` in each changed repo (perf-ci-infra first, then this repo with the submodule pointer). The founder and Claude Code review the PR together; fix issues on `staging`, then merge.
+4. After merging, fast-forward `staging` to `main` before the next run.
+
+The `external/OpenOPC` fork is outside this flow: its patches are committed on its `main` and pushed before this repo's pointer bump.
+
 ## OpenOPC setup
 
 ### Runtime layout

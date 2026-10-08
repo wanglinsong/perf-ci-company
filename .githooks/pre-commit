@@ -3,6 +3,15 @@
 # Credential fields must stay empty; supply secrets via environment variables
 # (e.g. llm_config.yaml `api_key_env`).
 set -euo pipefail
+
+# Agent and routine work is committed on `staging` and merged via a reviewed PR.
+branch="$(git symbolic-ref --short -q HEAD || true)"
+if [ "$branch" = "main" ] && [ "${ALLOW_MAIN_COMMIT:-}" != "1" ]; then
+  echo "pre-commit: commits to main are blocked. Commit on 'staging' and open a PR" >&2
+  echo "(founder override: ALLOW_MAIN_COMMIT=1 git commit ...)." >&2
+  exit 1
+fi
+
 status=0
 while IFS= read -r file; do
   case "$file" in
