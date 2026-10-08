@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# One-time per clone: enable the hooks and add the agents' push remote.
+# Founder/Claude Code keep using `origin` (SSH, wanglinsong); agents push to
+# `agent` (HTTPS as jason-nb-wang, token from GH_TOKEN in .env).
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+setup() {  # <repo dir> <hooks path> <github repo>
+  local dir="$1" hooks="$2" url="https://jason-nb-wang@github.com/wanglinsong/$3.git"
+  git -C "$dir" config core.hooksPath "$hooks"
+  git -C "$dir" remote get-url agent >/dev/null 2>&1 \
+    && git -C "$dir" remote set-url agent "$url" \
+    || git -C "$dir" remote add agent "$url"
+  # Reset inherited helpers (e.g. osxkeychain) for the bot, then use ours.
+  git -C "$dir" config --unset-all credential.https://jason-nb-wang@github.com.helper || true
+  git -C "$dir" config --add credential.https://jason-nb-wang@github.com.helper ""
+  git -C "$dir" config --add credential.https://jason-nb-wang@github.com.helper "!$ROOT/bin/git-credential-agent"
+}
+
+setup "$ROOT" .githooks perf-ci-company
+setup "$ROOT/external/perf-ci-infra" ../../.githooks perf-ci-infra
+echo "hooks enabled; remote 'agent' configured in both repos"

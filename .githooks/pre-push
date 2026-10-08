@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Agents (author jason-nb-wang / Perf CI Agent, set by bin/opc) may push only
+# `staging`, and only through the `agent` remote (the bot account).
+# Nobody pushes `main` directly; it changes through merged PRs
+# (founder override: ALLOW_MAIN_PUSH=1 git push ...).
+set -euo pipefail
+
+remote="$1"; url="$2"
+author="${GIT_AUTHOR_NAME:-$(git var GIT_AUTHOR_IDENT | sed 's/ <.*//')}"
+case "$author" in jason-nb-wang|"Perf CI Agent") agent=1 ;; *) agent=0 ;; esac
+
+if [ "$agent" -eq 1 ] && [[ "$url" != https://jason-nb-wang@github.com/* ]]; then
+  echo "pre-push: agents push only via the 'agent' remote: git push agent staging" >&2
+  exit 1
+fi
+
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main)
+      if [ "$agent" -eq 1 ] || [ "${ALLOW_MAIN_PUSH:-}" != "1" ]; then
+        echo "pre-push: pushing to main is blocked; merge a reviewed PR instead." >&2
+        exit 1
+      fi ;;
+    refs/heads/staging) ;;
+    *)
+      if [ "$agent" -eq 1 ]; then
+        echo "pre-push: agents may push only the staging branch (got $remote_ref)." >&2
+        exit 1
+      fi ;;
+  esac
+done
+exit 0

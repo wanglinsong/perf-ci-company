@@ -22,8 +22,10 @@
 All changes — OPC agent work and Claude Code repo management — go through `staging` and a reviewed pull request:
 
 1. Work is committed on the `staging` branch, in this repo and in `external/perf-ci-infra`. Agents commit their own deliverables there (rules in every ROLE.md, "Version Control").
-2. `.githooks/commit-msg` rejects agent commits (author `Perf CI Agent`, set by `bin/opc`) without a `Role:` trailer or touching paths outside that role's layout. `.githooks/pre-commit` blocks commits to `main` in both repos (founder override: `ALLOW_MAIN_COMMIT=1 git commit ...`). Enable hooks once per clone: `git config core.hooksPath .githooks` here and `git -C external/perf-ci-infra config core.hooksPath ../../.githooks`.
-3. When a run's work is ready, push `staging` and open a PR to `main` in each changed repo (perf-ci-infra first, then this repo with the submodule pointer). The founder and Claude Code review the PR together; fix issues on `staging`, then merge.
+2. `.githooks/commit-msg` rejects agent commits (author `jason-nb-wang`, set by `bin/opc`) without a `Role:` trailer or touching paths outside that role's layout. `.githooks/pre-commit` blocks commits to `main` in both repos (founder override: `ALLOW_MAIN_COMMIT=1 git commit ...`). `.githooks/pre-push` blocks direct pushes to `main` (founder override: `ALLOW_MAIN_PUSH=1`) and limits agents to `git push agent staging`. Run `bin/setup-git` once per clone: it enables the hooks in both repos and adds the `agent` remote.
+3. When a run's work items are approved, the CEO/CTO agent pushes `staging` and opens (or comments on) a PR to `main` in each changed repo, perf-ci-infra first. Claude Code (or the founder) bumps this repo's submodule pointer after the perf-ci-infra PR merges. The founder and Claude Code review the PR together; fix issues on `staging`, then merge.
+
+**GitHub identities.** Agents commit, push, and open PRs as the bot account `jason-nb-wang` (write collaborator on both repos): `bin/opc` sets its git author/committer, and `GH_TOKEN` in `.env` authenticates `gh` and the `agent` remote (`https://jason-nb-wang@github.com/...`, credential helper `bin/git-credential-agent`). The founder and Claude Code use `wanglinsong` — `origin` over SSH and the keyring `gh` login (don't load `.env` into the shell you review from, or `gh` acts as the bot) — to review, approve, and merge. Agents never approve or merge. GitHub branch protection isn't available for private repos on a free personal account, so `main` is guarded by the hooks and these rules.
 4. After merging, fast-forward `staging` to `main` before the next run.
 
 Only `perf-ci-company` and `external/perf-ci-infra` use `staging` branches and PRs. The `external/OpenOPC` and `external/agency-agents` forks are outside this flow: their changes are committed and pushed directly to their `main` (before this repo's pointer bump), and the hooks are not installed there.
@@ -57,12 +59,13 @@ bin/opc ui --project perf-ci
 
 Running `uv run opc` directly inside `external/OpenOPC` uses OpenOPC's own `.opc` and will not see Perf CI.
 
-### Execution agent — opencode
+### Execution and model host
 
 OpenOPC and all agent tool use (file edits, shell) run on this Mac, in this repo. Only model inference runs on host `opencode` (192.168.68.58), which serves Ollama at `http://ollama:11434` (`/etc/hosts`: `192.168.68.58 opencode` and `192.168.68.58 ollama`).
 
-- All roles run on `opencode` (`preferred_external_agent` in the org config; first in `preferred_order` in `agent_config.yaml`), using the local opencode CLI with model `ollama/qwen3.6:latest`.
-- The `ollama` provider lives in your user opencode config (`~/.config/opencode/opencode.json`, `baseURL: http://ollama:11434/v1`).
+- Company runs execute every role **natively** in OpenOPC (company mode forces native execution for its isolation boundary), using the model in `llm_config.yaml`. The `preferred_external_agent: opencode` setting in the org config is not used in company mode.
+- Company-mode shell commands get a fixed trusted PATH; `bin/opc` adds `/opt/homebrew/bin` via `OPC_TRUSTED_EXEC_PATHS`, appended after the system directories (agents prefix commands with `PATH=/opt/homebrew/bin:$PATH` so bash finds Homebrew tools). `GIT_*` variables other than author/committer identity are stripped.
+- For non-company use of the opencode CLI, the `ollama` provider lives in your user opencode config (`~/.config/opencode/opencode.json`, `baseURL: http://ollama:11434/v1`).
 - On host `opencode`, Ollama must listen on the network: start it with `OLLAMA_HOST=0.0.0.0:11434`. Ollama has no auth — anyone on the LAN can use it.
 - Ollama runs with a 64k context and a q8_0 KV cache (`OLLAMA_CONTEXT_LENGTH=65536 OLLAMA_FLASH_ATTENTION=1 OLLAMA_KV_CACHE_TYPE=q8_0`, set in `~/bin/opencode-serve` on the host); the half-size cache keeps qwen3.6 at ~22 GB. Keep `llm_config.yaml` `context_window` equal to it. The host (32 GB) runs near its memory limit — quit unneeded apps there during runs.
 - The OpenCode desktop app's server on `opencode:4096` is not used by OpenOPC.
