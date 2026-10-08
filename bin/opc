@@ -22,5 +22,9 @@ export OLLAMA_API_KEY="${OLLAMA_API_KEY:-ollama}"
 # are distinguishable and the commit-msg hook can require a Role trailer.
 export GIT_AUTHOR_NAME="Perf CI Agent"
 export GIT_AUTHOR_EMAIL="perf-ci-agent@localhost"
+
+# Extra executable directories OpenOPC trusts for company-mode shell commands
+# (its trusted PATH otherwise excludes Homebrew, hiding pulumi/aws/node/npm).
+export OPC_TRUSTED_EXEC_PATHS="/opt/homebrew/bin"
 cd "$ROOT/external/OpenOPC"
 exec uv run opc "$@"
