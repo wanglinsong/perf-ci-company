@@ -30,5 +30,12 @@ export GIT_COMMITTER_NAME="$BOT_NAME" GIT_COMMITTER_EMAIL="$BOT_EMAIL"
 # Extra executable directories OpenOPC trusts for company-mode shell commands
 # (its trusted PATH otherwise excludes Homebrew, hiding pulumi/aws/node/npm).
 export OPC_TRUSTED_EXEC_PATHS="/opt/homebrew/bin"
+
+# xcode-select points at Xcode.app, whose /usr/bin shims (git, make, ...) fail
+# in agent shells with "You have not agreed to the Xcode license". The Command
+# Line Tools need no license.
+if [ -d /Library/Developer/CommandLineTools ]; then
+  export DEVELOPER_DIR="${DEVELOPER_DIR:-/Library/Developer/CommandLineTools}"
+fi
 cd "$ROOT/external/OpenOPC"
 exec uv run opc "$@"
