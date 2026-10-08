@@ -53,7 +53,7 @@ the runtime, QA is the configured reviewer for Performance and Platform work.
 
 | Role | `external/perf-ci-infra` | Parent repo |
 |---|---|---|
-| CEO / CTO | — (coordinates; produces no artifacts) | `company/decisions/`, `company/current-focus.md`, own `AGENT.md`, skills |
+| CEO / CTO | — (coordinates; produces no artifacts) | `company/decisions/`, `company/reviews/` (item status), `company/current-focus.md`, own `AGENT.md`, skills |
 | Product Lead | `product/` (H2, discovery) | own `AGENT.md`, skills |
 | Performance Lead | `experiments/` (H3, H5, H7, H10) | own `AGENT.md`, skills |
 | Platform Lead | `infra/` (code, H6, H11) | own `AGENT.md`, skills |
