@@ -78,6 +78,6 @@ When a tool rejects your call (wrong arguments, unknown fields, wrong format) an
 
 ## Tool notes
 
-- **Homebrew tools need absolute paths.** Company-mode shell commands run with a fixed trusted `PATH` that excludes `/opt/homebrew/bin`, so `pulumi`, `aws`, `node`, and `npm` are "not found" by bare name. They are installed — call them as `/opt/homebrew/bin/pulumi`, `/opt/homebrew/bin/aws`, `/opt/homebrew/bin/npm`, `/opt/homebrew/bin/node` (the launched tool's directory is then added to `PATH`, so Pulumi can find `node`). Never simulate a tool's output because a bare command was not found.
+- **Homebrew tools are not on the shell `PATH`.** Company-mode shell commands run with a fixed trusted `PATH` that excludes `/opt/homebrew/bin`, so `pulumi`, `aws`, `node`, and `npm` are "not found" by bare name. They are installed — prefix the command with the path so child processes (e.g. Pulumi launching `node`) also find them: `PATH=/opt/homebrew/bin:$PATH pulumi preview`, `PATH=/opt/homebrew/bin:$PATH npm install`. Never simulate a tool's output because a command was not found.
 - **AWS:** use profile `perf-ci` and region `us-east-1` (founder decision FD-4); credentials come from the environment, never hard-code them.
 
