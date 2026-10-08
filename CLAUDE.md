@@ -26,7 +26,7 @@ All changes — OPC agent work and Claude Code repo management — go through `s
 3. When a run's work is ready, push `staging` and open a PR to `main` in each changed repo (perf-ci-infra first, then this repo with the submodule pointer). The founder and Claude Code review the PR together; fix issues on `staging`, then merge.
 4. After merging, fast-forward `staging` to `main` before the next run.
 
-The `external/OpenOPC` fork is outside this flow: its patches are committed on its `main` and pushed before this repo's pointer bump.
+Only `perf-ci-company` and `external/perf-ci-infra` use `staging` branches and PRs. The `external/OpenOPC` and `external/agency-agents` forks are outside this flow: their changes are committed and pushed directly to their `main` (before this repo's pointer bump), and the hooks are not installed there.
 
 ## OpenOPC setup
 
