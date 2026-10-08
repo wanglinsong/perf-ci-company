@@ -64,6 +64,7 @@ OpenOPC and all agent tool use (file edits, shell) run on this Mac, in this repo
 - All roles run on `opencode` (`preferred_external_agent` in the org config; first in `preferred_order` in `agent_config.yaml`), using the local opencode CLI with model `ollama/qwen3.6:latest`.
 - The `ollama` provider lives in your user opencode config (`~/.config/opencode/opencode.json`, `baseURL: http://ollama:11434/v1`).
 - On host `opencode`, Ollama must listen on the network: start it with `OLLAMA_HOST=0.0.0.0:11434`. Ollama has no auth — anyone on the LAN can use it.
+- Ollama runs with a 64k context and a q8_0 KV cache (`OLLAMA_CONTEXT_LENGTH=65536 OLLAMA_FLASH_ATTENTION=1 OLLAMA_KV_CACHE_TYPE=q8_0`, set in `~/bin/opencode-serve` on the host); the half-size cache keeps qwen3.6 at ~22 GB. Keep `llm_config.yaml` `context_window` equal to it. The host (32 GB) runs near its memory limit — quit unneeded apps there during runs.
 - The OpenCode desktop app's server on `opencode:4096` is not used by OpenOPC.
 
 ### LLM config
@@ -76,7 +77,7 @@ llm:
   api_base: http://ollama:11434/v1
   api_key: ''
   api_key_env: OLLAMA_API_KEY             # bin/opc defaults it to "ollama"
-  context_window: 32768
+  context_window: 65536                   # matches OLLAMA_CONTEXT_LENGTH on the host
   max_tokens: 8192
   temperature: 0.3
   routing: {}
