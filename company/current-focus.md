@@ -7,17 +7,17 @@ Current-phase context for every role. Update this file when the phase or priorit
 
 ---
 
-## Current Status (2026-10-07)
+## Current Status (2026-10-07) — Execution Round Initiated
 
 | Area | State | Notes |
 |------|-------|-------|
-| **Wedge doc** (`issue-0001-wedge-validation.md`) | Draft (2026-10-02) | No execution started |
-| **Product Lead** | Not started — scripts/targets prep needed | S2 (customer problem confirmed) is the highest-priority wedge risk; the human founder conducts discovery calls, Product Lead prepares scripts and target list |
-| **Performance Lead** | Not started — version pair identification needed | Must identify Gluten version pair first — blocks Platform spike + QA H4 review |
-| **Platform Lead** | Not started — EC2 provisioning spike needed | Can begin in parallel once version pair is identified |
-| **QA Lead** | Strategy drafted (qa-strategy-v1) | Will perform H4 design review once Performance Lead delivers experiment spec |
-| **S1 (Technical feasibility)** | Not started | Depends on Performance + Platform execution |
-| **S2 (Customer problem confirmed)** | Not started | the human founder conducts discovery calls; Product Lead prepares scripts/targets (#1 priority) |
+| **Wedge doc** (`issue-0001-wedge-validation.md`) | Draft (2026-10-02) | No execution started yet |
+| **Product Lead** | 🟡 Delegated — awaiting delivery | Work item `1ae43cd3`: Discovery script + target list. Founder conducts interviews. |
+| **Performance Lead** | 🟡 Delegated — awaiting delivery | Work item `e6e84dd3`: H3 Experiment Spec + H10 Algorithm Spec. Must identify version pair. |
+| **Platform Lead** | 🟡 Delegated — awaiting delivery | Work item `b0af4ccc`: Pulumi spike + runner script (code/dry-run only, no cloud). |
+| **QA Lead** | 🔴 Waiting on Performance Lead | Work item `366549b2`: H4 Design Challenge. Blocked until Perf spec delivered. |
+| **S1 (Technical feasibility)** | Not started | Depends on Perf + Platform execution |
+| **S2 (Customer problem confirmed)** | 🟡 In progress | Product Lead preparing discovery materials; founder to conduct interviews |
 | **S3 (Willingness to pay)** | Not started | Requires S2 results first |
 
 ### Intake Artifacts (Complete 2026-10-03)
@@ -30,12 +30,28 @@ Current-phase context for every role. Update this file when the phase or priorit
 | Platform Brief v1 | `external/perf-ci-infra/infra/platform-brief-v1.md` | Complete |
 | QA Strategy v1 | `external/perf-ci-infra/qa/qa-strategy-v1.md` | Complete |
 
+### Active Work Items (Delegated 2026-10-07)
+
+| Work Item | Owner | Title | Status | ID |
+|-----------|-------|-------|--------|----|
+| H3+H10 Specs | Performance Lead | H3 Experiment Spec + H10 Algorithm Spec for Proof Experiment | Ready | `e6e84dd3` |
+| Pulumi Spike | Platform Lead | Pulumi Spike for Ephemeral m7g.4xlarge + TPC-DS Runner Script | Ready | `b0af4ccc` |
+| Discovery | Product Lead | Discovery Interview Scripts and Target List for S2 Validation | Ready | `1ae43cd3` |
+| H4 Design Challenge | QA Lead | H4 Design Challenge of Proof Experiment Spec | Waiting on Perf | `366549b2` |
+
 ### Priority Order (CEO/CTO decision — updated 2026-10-07)
 
 1. **Product Lead** — Prepare discovery scripts and target list; the human founder conducts customer interviews (de-risks entire wedge)
 2. **Performance Lead** — Identify Gluten version pair (unblocks Platform spike + QA H4 review)
 3. **Platform Lead** — Spike EC2 provisioning via Pulumi (parallel with #2 once unblocked)
 4. **QA Lead** — H4 design review of experiment spec (after Perf Lead delivers)
+
+### Decisions Recorded This Round
+
+| Decision | Path | Status |
+|----------|------|--------|
+| ARM vs x86: Option A (m7g.4xlarge, ARM-only) | `company/decisions/2026-10-07-arm-vs-x86-escalation.md` | Decided |
+| Cloud access: No provisioning this round — specs/code only | This delegation | Confirmed |
 
 ---
 
