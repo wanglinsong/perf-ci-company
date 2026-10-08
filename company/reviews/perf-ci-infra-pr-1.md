@@ -17,6 +17,7 @@
 | FD-1 | Instance type: m7g.4xlarge has no local NVMe. Use **m7gd.4xlarge** (local NVMe) or keep m7g with **EBS gp3** (storage is then a listed confound)? | m7gd.4xlarge | **m7gd.4xlarge** (founder, 2026-10-08) |
 | FD-2 | Spend envelope for the pilot and proof experiment (per-run cap, total cap, max TTL). | ≤ $5/run, ≤ $50 total, TTL 4 h | **Spend limit $100 total** for the pilot and proof experiment (founder, 2026-10-08); keep per-run cost and TTL minimal and report actual spend |
 | FD-3 | OS for the benchmark node: Ubuntu 24.04 (Pulumi today) or Amazon Linux 2023? | Ubuntu 24.04 | **Amazon Linux 2023** (founder, 2026-10-08) — Pulumi and the spec must both switch to AL2023 |
+| FD-4 | AWS account and region for Pulumi, the spec, and cost estimates. | — | **AWS profile `perf-ci`, region `us-east-1`** (founder, 2026-10-08). Credentials come from the environment (`.env`); never hard-code profile secrets, account IDs, or keys. |
 
 ## Performance Lead — `experiments/proof-experiment/`
 
