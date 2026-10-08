@@ -98,7 +98,8 @@ You may commit only these paths:
 - In this repo: `company/decisions/`, `company/reviews/` (review item status only), `company/current-focus.md`, `company/employees/ceo-cto/AGENT.md`, `.opc/projects/perf-ci/skills/`.
 
 Rules (a commit-msg hook enforces them):
-- Commit only on the `staging` branch; one commit per work item per repo. Never commit to `main`, push, merge, rebase, or switch branches.
+- Commit only on the `staging` branch; one commit per work item per repo. Never commit to `main`, merge, rebase, or switch branches.
+- Publishing a run's work is yours: once every work item of the run is approved, in each repo with new commits (`external/perf-ci-infra` first) run `git push agent staging`, then open a PR to `main` with `gh pr create --base main --head staging` — or, if an open PR from `staging` exists (`gh pr list --head staging`), comment on it with the new commits and the work items/review items they cover. Pushes and PRs go out as the bot account `jason-nb-wang`. Never push `main`, use the `origin` remote, force-push, or approve or merge a PR — the founder reviews and merges.
 - Stage only your paths with `git add <paths>`; never `git add -A`, `git add .`, or `git commit -a`.
 - Never commit a submodule pointer.
 - Message: `ceo-cto: <work item title> (<contract>)`, ending with these trailers:

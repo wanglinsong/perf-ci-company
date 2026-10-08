@@ -5,14 +5,15 @@
 # Founder / Claude Code commits (no Role trailer, own identity) pass through.
 set -euo pipefail
 
-AGENT_AUTHOR_NAME="Perf CI Agent"
+# jason-nb-wang is set by bin/opc; "Perf CI Agent" is the earlier agent identity.
+AGENT_AUTHOR_NAMES="jason-nb-wang|Perf CI Agent"
 msg_file="$1"
 
 role="$(git interpret-trailers --parse < "$msg_file" | sed -n 's/^Role:[[:space:]]*//p' | tail -1 | tr -d '[:space:]')"
 author="${GIT_AUTHOR_NAME:-$(git var GIT_AUTHOR_IDENT | sed 's/ <.*//')}"
 
 if [ -z "$role" ]; then
-  if [ "$author" = "$AGENT_AUTHOR_NAME" ]; then
+  if [[ "|$AGENT_AUTHOR_NAMES|" == *"|$author|"* ]]; then
     echo "commit-msg: agent commits must end with a 'Role: <role-id>' trailer (see your ROLE.md, Version Control)." >&2
     exit 1
   fi
