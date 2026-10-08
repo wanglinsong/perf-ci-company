@@ -22,7 +22,8 @@ autonomy:
     denial_memory:
       enabled: true
       repeat_threshold: 2
-    denied_paths: []
+    denied_paths:
+    - /Users/lwang/gh/wls/perf-ci-company/.env
     deny_tools: []
     enabled: true
     fail_closed: true

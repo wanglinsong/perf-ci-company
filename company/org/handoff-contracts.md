@@ -73,6 +73,7 @@ Commits (enforced by `.githooks/commit-msg` in both repos):
   Role: <role id>
   ```
 - Never commit a submodule pointer; the founder bumps it when opening the parent PR.
+- Never read, print, or copy `.env` or any credential file (`cat`, `grep`, `source`, file tools). Credentials reach you only as environment variables in your shell; check a variable is set with `[ -n "$VAR" ]`, never by echoing it.
 - Agents commit and push as the bot account `jason-nb-wang`. Only the CEO/CTO pushes (`git push agent staging`) and opens PRs, once a run's work items are approved; nobody but the founder approves or merges. `.githooks/pre-push` blocks agent pushes to `main`, to other branches, or through `origin`.
 
 ## Artifact Ownership
