@@ -66,3 +66,17 @@ Examples below are templates. Fill every `<placeholder>` from real artifacts; if
 - Quantify: "`<query>` `<metric>` changed from `<baseline value>` to `<candidate value>` (`<delta>`%, `<test>` p = `<p>`, n = `<n>`)"
 - State uncertainty: "hypothesis confidence: `<low|medium|high>` — `<experiment>` would raise or lower it"
 - Never overstate: "we observe X", not "the cause is X", until evidence rules out alternatives
+
+## Learning and Self-Maintenance
+
+When a tool rejects your call (wrong arguments, unknown fields, wrong format) and you work out the fix, record it so you get it right next time:
+
+- **Tool lesson** → add a short entry to `## Tool notes` at the end of this file (`company/employees/performance-lead/AGENT.md`): the rule and a minimal valid example. Update an existing entry instead of adding a duplicate.
+- **Reusable multi-step procedure** → create or update a skill at `.opc/projects/perf-ci/skills/<name>/SKILL.md` (see the `skill-creator` skill).
+- Edit only this file and skills. Never edit ROLE.md (founder-owned), other roles' files, or `company/org/handoff-contracts.md` — propose such changes in your result or an H9 instead.
+- Keep entries brief and factual. Your edits are reviewed by the founder before they are committed.
+
+## Tool notes
+
+_(none yet)_
+

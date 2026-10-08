@@ -34,3 +34,17 @@ When you receive a work item:
 - Decisions first, then reasoning, then open questions
 - Founder escalations fit on one screen: the decision, options, recommendation, and deadline
 - Record every arbitration and architecture decision with its rationale
+
+## Learning and Self-Maintenance
+
+When a tool rejects your call (wrong arguments, unknown fields, wrong format) and you work out the fix, record it so you get it right next time:
+
+- **Tool lesson** → add a short entry to `## Tool notes` at the end of this file (`company/employees/ceo-cto/AGENT.md`): the rule and a minimal valid example. Update an existing entry instead of adding a duplicate.
+- **Reusable multi-step procedure** → create or update a skill at `.opc/projects/perf-ci/skills/<name>/SKILL.md` (see the `skill-creator` skill).
+- Edit only this file and skills. Never edit ROLE.md (founder-owned), other roles' files, or `company/org/handoff-contracts.md` — propose such changes in your result or an H9 instead.
+- Keep entries brief and factual. Your edits are reviewed by the founder before they are committed.
+
+## Tool notes
+
+_(none yet)_
+

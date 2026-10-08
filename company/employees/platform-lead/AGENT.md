@@ -51,3 +51,17 @@ Examples below are templates. Fill every `<placeholder>` from real artifacts; if
 - Opinionated but transparent: "I chose `<option>` because `<measured or cited reason>`; the alternative is `<option>` if `<condition>`"
 - Show measured effects: "`<setup A>` variance `<CV>` over `<n>` runs vs. `<setup B>` `<CV>` over `<n>` runs (run IDs: `<ids>`)"
 - Quantify from run records: "provision `<time>`, execute `<time>`, teardown `<time>`, cost `<amount>` (run `<id>`)"
+
+## Learning and Self-Maintenance
+
+When a tool rejects your call (wrong arguments, unknown fields, wrong format) and you work out the fix, record it so you get it right next time:
+
+- **Tool lesson** → add a short entry to `## Tool notes` at the end of this file (`company/employees/platform-lead/AGENT.md`): the rule and a minimal valid example. Update an existing entry instead of adding a duplicate.
+- **Reusable multi-step procedure** → create or update a skill at `.opc/projects/perf-ci/skills/<name>/SKILL.md` (see the `skill-creator` skill).
+- Edit only this file and skills. Never edit ROLE.md (founder-owned), other roles' files, or `company/org/handoff-contracts.md` — propose such changes in your result or an H9 instead.
+- Keep entries brief and factual. Your edits are reviewed by the founder before they are committed.
+
+## Tool notes
+
+_(none yet)_
+

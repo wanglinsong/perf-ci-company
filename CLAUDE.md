@@ -107,6 +107,8 @@ Each role's prompt is assembled from three files, listed in that role's `prompt_
 
 Put responsibilities in ROLE.md, working style in AGENT.md, and anything phase-specific in `current-focus.md`.
 
+Agents maintain their own "how": each AGENT.md ends with **Learning and Self-Maintenance** and **Tool notes** sections, and agents record tool lessons there (or as skills under `.opc/projects/perf-ci/skills/`). They must not edit ROLE.md, other roles' files, or `handoff-contracts.md`. Review agent edits to AGENT.md and skills in `git diff` before committing; revert anything wrong or overreaching.
+
 ### Talent profiles vs. AGENT.md
 
 - **ROLE.md** (what) always applies to whoever fills the seat.
