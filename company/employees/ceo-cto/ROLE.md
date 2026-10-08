@@ -95,7 +95,7 @@ The parent repo defines and governs the company; `external/perf-ci-infra` holds 
 
 You may commit only these paths:
 - In `external/perf-ci-infra`: nothing — you coordinate and produce no artifacts there.
-- In this repo: `company/decisions/`, `company/current-focus.md`, `company/employees/ceo-cto/AGENT.md`, `.opc/projects/perf-ci/skills/`.
+- In this repo: `company/decisions/`, `company/reviews/` (review item status only), `company/current-focus.md`, `company/employees/ceo-cto/AGENT.md`, `.opc/projects/perf-ci/skills/`.
 
 Rules (a commit-msg hook enforces them):
 - Commit only on the `staging` branch; one commit per work item per repo. Never commit to `main`, push, merge, rebase, or switch branches.

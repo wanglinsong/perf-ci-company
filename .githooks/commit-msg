@@ -35,7 +35,7 @@ case "$repo:$role" in
   infra:performance-lead) allowed="experiments/" ;;
   infra:platform-lead)    allowed="infra/" ;;
   infra:qa-lead)          allowed="qa/" ;;
-  parent:ceo-cto)         allowed="company/decisions/ company/current-focus.md company/employees/ceo-cto/AGENT.md .opc/projects/perf-ci/skills/" ;;
+  parent:ceo-cto)         allowed="company/decisions/ company/reviews/ company/current-focus.md company/employees/ceo-cto/AGENT.md .opc/projects/perf-ci/skills/" ;;
   parent:product-lead|parent:performance-lead|parent:platform-lead|parent:qa-lead)
                           allowed="company/employees/$role/AGENT.md .opc/projects/perf-ci/skills/" ;;
   *)
