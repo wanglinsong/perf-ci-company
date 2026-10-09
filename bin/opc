@@ -42,5 +42,13 @@ export OPC_COMPANY_MAX_CONCURRENT_TURNS="${OPC_COMPANY_MAX_CONCURRENT_TURNS:-1}"
 if [ -d /Library/Developer/CommandLineTools ]; then
   export DEVELOPER_DIR="${DEVELOPER_DIR:-/Library/Developer/CommandLineTools}"
 fi
+# The Office UI has no authentication and OpenOPC binds it to 0.0.0.0 by
+# default, which lets anyone on the network drive agents that run shell
+# commands here. Bind it to localhost unless --host is given explicitly.
+args=("$@")
+if [ "${1:-}" = "ui" ]; then
+  case " $* " in *" --host "*|*" --host="*) ;; *) args+=(--host 127.0.0.1) ;; esac
+fi
+
 cd "$ROOT/external/OpenOPC"
-exec uv run opc "$@"
+exec uv run opc ${args[@]+"${args[@]}"}
