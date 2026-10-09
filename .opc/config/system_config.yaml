@@ -157,7 +157,7 @@ system:
     enabled: false
     max_concurrent_runs: 1
   log_level: INFO
-  max_agent_iterations: 50
+  max_agent_iterations: 120
   mcp_servers: []
   native_runtime:
     artifact_compaction:
