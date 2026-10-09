@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Agents (author jason-nb-wang, set by bin/opc) must never rewrite an existing
+# commit: an amend folds the previous commit -- possibly another role's work --
+# into theirs, and commit-msg only sees the newly staged paths. Git passes
+# "commit" as $2 for --amend, -c and -C.
+set -euo pipefail
+source="${2:-}"
+author="${GIT_AUTHOR_NAME:-$(git var GIT_AUTHOR_IDENT | sed 's/ <.*//')}"
+if [ "$source" = "commit" ] && [ "$author" = "jason-nb-wang" ]; then
+  echo "prepare-commit-msg: agents may not amend or reuse commits (--amend, -c, -C)." >&2
+  echo "Make a new commit with only your role's paths." >&2
+  exit 1
+fi
+exit 0
