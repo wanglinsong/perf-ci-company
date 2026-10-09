@@ -2,7 +2,7 @@
 
 **PR:** https://github.com/wanglinsong/perf-ci-infra/pull/1 (branch `staging`)
 **Review:** founder + Claude Code, 2026-10-07 — verdict: **request changes**
-**Status:** open — round 3 (re-review 2026-10-09; FD-6 switches the benchmark node to x86)
+**Status:** open — round 3 (re-review 2026-10-09: https://github.com/wanglinsong/perf-ci-infra/pull/1#pullrequestreview-5476366673; FD-6 switches the benchmark node to x86)
 
 ## How to process this file
 
