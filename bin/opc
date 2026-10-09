@@ -31,6 +31,11 @@ export GIT_COMMITTER_NAME="$BOT_NAME" GIT_COMMITTER_EMAIL="$BOT_EMAIL"
 # (its trusted PATH otherwise excludes Homebrew, hiding pulumi/aws/node/npm).
 export OPC_TRUSTED_EXEC_PATHS="/opt/homebrew/bin"
 
+# One seat turn at a time: Ollama serves one request at a time, and seats
+# interleaving calls evict each other's prompt cache (~1 min re-read per call
+# at 40k tokens). Raise if the model host can serve several in parallel.
+export OPC_COMPANY_MAX_CONCURRENT_TURNS="${OPC_COMPANY_MAX_CONCURRENT_TURNS:-1}"
+
 # xcode-select points at Xcode.app, whose /usr/bin shims (git, make, ...) fail
 # in agent shells with "You have not agreed to the Xcode license". The Command
 # Line Tools need no license.
