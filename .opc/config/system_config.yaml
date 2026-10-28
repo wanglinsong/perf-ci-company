@@ -33,6 +33,8 @@ autonomy:
       cache_upgrade_context: true
       enabled: true
       max_sandbox_retries: 1
+    network_shell_commands: []
+    patterns_override_grants: false
   safe_command_prefixes:
   - ls
   - pwd
@@ -245,6 +247,7 @@ system:
     reactive_compaction:
       circuit_breaker_failures: 2
       enabled: true
+      max_compactions_per_turn: 12
       max_overflow_retries: 2
     stream_llm: true
     stream_rendering:
@@ -274,6 +277,10 @@ system:
       preserve_recent_messages: 8
       tool_result_char_budget: 4000
     tool_result_budget_chars: 20000
+    tool_timeout_exempt:
+    - request_user_input
+    tool_timeout_grace_seconds: 60
+    tool_timeout_seconds: 900
     verification_contract:
       append_status_to_final: true
       enabled: true
@@ -285,7 +292,17 @@ system:
       require_on_risky_tools: true
       skip_metadata_key: skip_verification
       verifier_profile: verify
+  notifications:
+    checkpoint_types: []
+    enabled: false
+    max_age_hours: 24.0
+    poll_interval_seconds: 15.0
+    slack:
+      webhook_url: ''
+      webhook_url_env: OPC_SLACK_WEBHOOK_URL
+      webhook_url_file: ''
   opc_home: ''
+  public_url: ''
   require_confirmation:
   - deploy to production
   - send external emails

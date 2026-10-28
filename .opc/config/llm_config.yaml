@@ -7,6 +7,9 @@ llm:
   default_model: openai/qwen3.6:latest
   fallback: {}
   max_tokens: 8192
+  prompt_cache_breakpoints: false
   reasoning_effort: null
   routing: {}
+  stream_first_chunk_timeout_seconds: 900
+  stream_idle_timeout_seconds: 300
   temperature: 0.3
